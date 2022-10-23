@@ -22,15 +22,15 @@ void Cubo::createVertex(float lado)
 {
    v.resize(8);
    //Centrado en el origen
-   v[0] = {-lado/2, 0, lado/2};
-   v[1] = {lado/2, 0, lado/2};
-   v[2] = {lado/2, lado, lado/2};
-   v[3] = {-lado/2, lado, lado/2};
+   v[0] = {-lado/2, -lado/2, -lado/2};
+   v[1] = {lado/2, -lado/2, -lado/2};
+   v[2] = {lado/2, lado/2, -lado/2};
+   v[3] = {-lado/2, lado/2, -lado/2};
 
-   v[4] = {-lado/2, 0, -lado/2};
-   v[5] = {lado/2, 0, -lado/2};
-   v[6] = {lado/2, lado, -lado/2};
-   v[7] = {-lado/2, lado, -lado/2};
+   v[4] = {-lado/2, -lado/2, lado/2};
+   v[5] = {lado/2, -lado/2, lado/2};
+   v[6] = {lado/2, lado/2, lado/2};
+   v[7] = {-lado/2, lado/2, lado/2};
 
    //Vertice inferior en origen
    // v[0] = {0.0f, 0.0f, 0.0f};
@@ -38,10 +38,10 @@ void Cubo::createVertex(float lado)
    // v[2] = {lado, lado, 0.0f};
    // v[3] = {0.0f, lado, 0.0f};
 
-   // v[4] = {0.0f, 0.0f, -lado};
-   // v[5] = {lado, 0.0f, -lado};
-   // v[6] = {lado, lado, -lado};
-   // v[7] = {0.0f, lado, -lado};
+   // v[4] = {0.0f, 0.0f, lado};
+   // v[5] = {lado, 0.0f, lado};
+   // v[6] = {lado, lado, lado};
+   // v[7] = {0.0f, lado, lado};
 }
 
 void Cubo::createTriangles()
@@ -69,9 +69,6 @@ void Cubo::createTriangles()
    f[10] = {1,4,5};
    f[11] = {4,1,0};
 }
-
-
-
 
 
 void Cubo::createColours()

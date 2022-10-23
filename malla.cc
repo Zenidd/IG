@@ -36,6 +36,8 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
 
    glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
+   glFrontFace(GL_CW);
 
    if (LinesEnabled){
       if ( id_vbo_c_l != 0 ) {
@@ -64,7 +66,7 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
          glColorPointer( 3, GL_FLOAT , 0, 0 );
          glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
-      glPolygonMode(GL_FRONT, GL_FILL);
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    } 
 
