@@ -18,3 +18,9 @@ COMENTARIOS
     Ahora es mandatorio usar la API Metal de Mac y esa librería no está ahi.
 
 glu_flag_macos  := /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
+
+--------------------
+ToDo:
+La parte del cull faces en la inicialización
+centro de la base del cuadrado 
+caras al reves  

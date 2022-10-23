@@ -4,6 +4,7 @@
 #include "ejes.h"
 #include "malla.h"
 #include "cubo.h"
+#include "objply.h"
 #include "piramidepentagonal.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION} menu;
@@ -37,11 +38,11 @@ class Escena
    Ejes ejes;
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
    PiramidePentagonal * piramide= nullptr ; // es importante inicializarlo a 'nullptr'
-   bool CubeEnabled = false, PyramidEnabled = false;
-   bool PointsEnabled = false, LinesEnabled = true, SolidEnabled = false;
+   ObjPLY * objetoply= nullptr ; // es importante inicializarlo a 'nullptr'
+   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
+   bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
    
    public:
-
     Escena();
 	void inicializar( int UI_window_width, int UI_window_height );
 	void redimensionar( int newWidth, int newHeight ) ;

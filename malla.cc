@@ -36,37 +36,40 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
 
    glEnable(GL_CULL_FACE);
-   glCullFace(GL_BACK);
-   glFrontFace(GL_CW);
+   // glCullFace(GL_BACK);
+   // glFrontFace(GL_CW);
 
    if (LinesEnabled){
       if ( id_vbo_c_l != 0 ) {
-         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_l); // Usar el buffer activo para el color
-         glColorPointer( 3, GL_FLOAT , 0, 0 );
-         glBindBuffer( GL_ARRAY_BUFFER , 0 );
+         // glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_l); // Usar el buffer activo para el color
+         // glColorPointer( 3, GL_FLOAT , 0, 0 );
+         // glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      // glScalef(20,20,20);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    } 
    
    if (PointsEnabled){
       if ( id_vbo_c_s != 0 ) {
-         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_s); // Usar el buffer activo para el color
-         glColorPointer( 3, GL_FLOAT , 0, 0 );
-         glBindBuffer( GL_ARRAY_BUFFER , 0 );
+         // glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_s); // Usar el buffer activo para el color
+         // glColorPointer( 3, GL_FLOAT , 0, 0 );
+         // glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
       glPointSize(6);
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+      // glScalef(20,20,20);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    }
 
    if (SolidEnabled){
       if ( id_vbo_c_p != 0 ) {
-         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_p); // Usar el buffer activo para el color
-         glColorPointer( 3, GL_FLOAT , 0, 0 );
-         glBindBuffer( GL_ARRAY_BUFFER , 0 );
+         // glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_p); // Usar el buffer activo para el color
+         // glColorPointer( 3, GL_FLOAT , 0, 0 );
+         // glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      // glScalef(20,20,20);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    } 
 

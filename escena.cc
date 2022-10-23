@@ -9,6 +9,7 @@
 
 Escena::Escena()
 {
+
     Front_plane       = 50.0;
     Back_plane        = 2000.0;
     Observer_distance = 4*Front_plane;
@@ -18,6 +19,7 @@ Escena::Escena()
     ejes.changeAxisSize( 5000 );
     cubo = new Cubo(70);
     piramide = new PiramidePentagonal(70, 50);
+    objetoply = new ObjPLY("./plys/beethoven.ply");
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
@@ -58,6 +60,7 @@ void Escena::dibujar()
    ejes.draw();
    if (CubeEnabled) cubo->draw(PointsEnabled, LinesEnabled, SolidEnabled);
    if (PyramidEnabled) piramide->draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // if (OplyEnabled) objetoply ->draw(PointsEnabled, LinesEnabled, SolidEnabled);
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -113,6 +116,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             cout << "Primero activa modo de Sel. Objeto (O)" << endl;
          }
          break ;
+      case 'K' :
+         if (modoMenu==SELOBJETO) 
+            if (!OplyEnabled) OplyEnabled = true;
+            else OplyEnabled = false;
+         else {
+            cout << "Primero activa modo de Sel. Objeto (O)" << endl;
+         }
+         break ;         
       case 'D' :
          if (modoMenu==SELVISUALIZACION) 
             if (!PointsEnabled) PointsEnabled = true;
