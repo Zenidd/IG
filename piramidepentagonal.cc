@@ -16,15 +16,15 @@ PiramidePentagonal::PiramidePentagonal(float h, float r)
 
 void PiramidePentagonal::createVertex(float h, float r)
 {
-   float PI = 3.14159265358979323846;
+   
    v.resize(7);
    v[0] = {0.0f, 0.0f, 0.0f};
      
    v[1] = {r, 0.0f, 0.0f};
-   v[2] = {r*cos(72*(PI/180)), 0.0f, r*sin(72*(PI/180))};
-   v[3] = {r*cos(72*2*(PI/180)), 0.0f, r*sin(72*2*(PI/180))};
-   v[4] = {r*cos(72*3*(PI/180)), 0.0f, r*sin(72*3*(PI/180))};
-   v[5] = {r*cos(72*4*(PI/180)), 0.0f, r*sin(72*4*(PI/180))};
+   v[2] = {r*cos(72*(M_PI/180)), 0.0f, r*sin(72*(M_PI/180))};
+   v[3] = {r*cos(72*2*(M_PI/180)), 0.0f, r*sin(72*2*(M_PI/180))};
+   v[4] = {r*cos(72*3*(M_PI/180)), 0.0f, r*sin(72*3*(M_PI/180))};
+   v[5] = {r*cos(72*4*(M_PI/180)), 0.0f, r*sin(72*4*(M_PI/180))};
 
    v[6] = {0.0f, h, 0.0f};
 }

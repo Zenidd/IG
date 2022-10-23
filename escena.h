@@ -5,7 +5,9 @@
 #include "malla.h"
 #include "cubo.h"
 #include "objply.h"
+#include "objrevolucion.h"
 #include "piramidepentagonal.h"
+#include "cilindro.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION} menu;
 
@@ -39,9 +41,15 @@ class Escena
    menu modoMenu=NADA;
    // Objetos de la escena
    Ejes ejes;
-   Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
-   PiramidePentagonal * piramide= nullptr ; // es importante inicializarlo a 'nullptr'
-   ObjPLY * objetoply= nullptr ; // es importante inicializarlo a 'nullptr'
+   Cubo * cubo = nullptr ;
+   PiramidePentagonal * piramide= nullptr ;
+   ObjPLY * objetoply= nullptr ;
+   ObjRevolucion * objrevolucion = nullptr;
+   ObjRevolucion * objrevolucion1 = nullptr;
+   ObjRevolucion * objrevolucion2 = nullptr;
+   Cilindro * cilindro = nullptr;
+
+
    bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
    bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
    

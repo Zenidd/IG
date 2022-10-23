@@ -20,7 +20,9 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    if ( id_vbo_c_s == 0 ) id_vbo_c_s = CrearVBO(GL_ARRAY_BUFFER, sizeof(c_s[0])*c_s.size(), c_s.data());
    if ( id_vbo_c_l == 0 ) id_vbo_c_l = CrearVBO(GL_ARRAY_BUFFER, sizeof(c_l[0])*c_l.size(), c_l.data());
    if ( id_vbo_c_p == 0 ) id_vbo_c_p = CrearVBO(GL_ARRAY_BUFFER, sizeof(c_p[0])*c_p.size(), c_p.data());
-   
+
+std::cout << v.size() << std::endl;
+
    glEnableClientState( GL_COLOR_ARRAY );
 
    glBindBuffer( GL_ARRAY_BUFFER , id_vbo_ver );
@@ -38,13 +40,13 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
 
 
    if (LinesEnabled){
+      std::cout << "LINEAS ACTIVAS" << std::endl;
       if ( id_vbo_c_l != 0 ) {
          glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_l); 
          glColorPointer( 3, GL_FLOAT , 0, 0 );
          glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-      // glScalef(20,20,20);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    } 
    
@@ -56,7 +58,6 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
       }
       glPointSize(6);
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-      // glScalef(20,20,20);
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
    }
 

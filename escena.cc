@@ -18,9 +18,13 @@ Escena::Escena()
     Scale             = 1.0 ; 
 
     ejes.changeAxisSize( 5000 );
-    cubo = new Cubo(70);
-    piramide = new PiramidePentagonal(70, 50);
+   //  cubo = new Cubo(70);
+   //  piramide = new PiramidePentagonal(70, 50);
     objetoply = new ObjPLY("./plys/beethoven.ply");
+   //  objrevolucion = new ObjRevolucion("./plys/lata-pinf.ply", 80);
+   //  objrevolucion1 = new ObjRevolucion("./plys/lata-psup.ply", 80);
+   //  objrevolucion2 = new ObjRevolucion("./plys/lata-pcue.ply", 80);
+   cilindro = new Cilindro(80, 80, 150, 50);
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
@@ -62,9 +66,13 @@ void Escena::dibujar()
 	change_observer();
    ejes.draw();
    glScalef(Scale,Scale,Scale);
-   if (CubeEnabled) cubo->draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   if (PyramidEnabled) piramide->draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   if (OplyEnabled) objetoply ->draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // if (CubeEnabled) cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // if (PyramidEnabled) piramide -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // objrevolucion2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -153,11 +161,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          }
          break ;
       case 'Z' :
-         Scale++;
+         Scale+=5;
          cout << "Scale equal to " << Scale << endl;
          break ;
       case 'X' :
-         Scale--;
+         Scale-=5;
          cout << "Scale equal to " << Scale << endl;
          break ;
       // COMPLETAR con los diferentes opciones de teclado 

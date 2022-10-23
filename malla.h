@@ -24,7 +24,7 @@ class Malla3D
       // función que dibuja el objeto en modo diferido (usando VBOs)
       void draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled) ;
 
-   protected:
+   public:
       std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
       std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
 
@@ -42,7 +42,6 @@ class Malla3D
    // completar P1: tabla de colores
    // Completar P1: vbo y método asociado
    GLuint CrearVBO( GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram);
-   
 } ;
 
 
