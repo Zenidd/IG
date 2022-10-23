@@ -15,6 +15,7 @@ Escena::Escena()
     Observer_distance = 4*Front_plane;
     Observer_angle_x  = 0.0 ;
     Observer_angle_y  = 0.0 ;
+    Scale             = 1.0 ; 
 
     ejes.changeAxisSize( 5000 );
     cubo = new Cubo(70);
@@ -60,9 +61,10 @@ void Escena::dibujar()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
    ejes.draw();
+   glScalef(Scale,Scale,Scale);
    if (CubeEnabled) cubo->draw(PointsEnabled, LinesEnabled, SolidEnabled);
    if (PyramidEnabled) piramide->draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // if (OplyEnabled) objetoply ->draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   if (OplyEnabled) objetoply ->draw(PointsEnabled, LinesEnabled, SolidEnabled);
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -149,6 +151,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          else {
             cout << "Primero activa modo de visualizacion (V)" << endl;
          }
+         break ;
+      case 'Z' :
+         Scale++;
+         cout << "Scale equal to " << Scale << endl;
+         break ;
+      case 'X' :
+         Scale--;
+         cout << "Scale equal to " << Scale << endl;
          break ;
       // COMPLETAR con los diferentes opciones de teclado 
    }

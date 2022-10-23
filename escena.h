@@ -23,6 +23,9 @@ class Escena
    GLfloat Observer_angle_x;
    GLfloat Observer_angle_y;
 
+
+   GLfloat Scale;
+
    // variables que controlan la ventana y la transformacion de perspectiva
    GLfloat Width, Height, Front_plane, Back_plane;
 
