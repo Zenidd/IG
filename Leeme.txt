@@ -1,0 +1,20 @@
+Juan Pablo Sáez Gutiérrez - 77136956Q - IG D1
+jpsg@correo.ugr.es
+
+INSTRUCCIONES
+    - Ejecutar "make" para compilar y lanzar
+    - Tecla "O" activa modo selección de objeto (Ningun objeto mostrado por defecto):
+        . Con este modo activo, tecla "P" activa/desactiva objeto Pirámide.
+        . Con este modo activo, tecla "C" activa/desactiva objeto Cubo.
+    - Tecla "V" activa modo selección de Visualización (Visualización alambre por defecto):
+        . Con este modo activo, tecla "L" activa/desactiva modo alambre.
+        . Con este modo activo, tecla "S" activa/desactiva modo sólido.
+        . Con este modo activo, tecla "D" activa/desactiva modo punto.
+
+COMENTARIOS
+    - Los dos objetos pueden ser visulizados simultaneamente.
+    - La única modificación al Makefile original ha sido comentar la flag anotada aquí abajo.
+    Esa es la ruta donde antiguamente se esperaba el framework OpenGL antes de Maverick (2018).
+    Ahora es mandatorio usar la API Metal de Mac y esa librería no está ahi.
+
+glu_flag_macos  := /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
