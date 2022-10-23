@@ -35,9 +35,8 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    // activar buffer: VBO de triángulos
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
 
-   glEnable(GL_CULL_FACE);
-   // glCullFace(GL_BACK);
-   // glFrontFace(GL_CW);
+
+
 
    if (LinesEnabled){
       if ( id_vbo_c_l != 0 ) {

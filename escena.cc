@@ -42,6 +42,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
    change_projection( float(UI_window_width)/float(UI_window_height) );
 	glViewport( 0, 0, UI_window_width, UI_window_height );
+
+   glEnable(GL_CULL_FACE);
 }
 
 
