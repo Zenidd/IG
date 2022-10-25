@@ -20,15 +20,15 @@ Escena::Escena()
     ejes.changeAxisSize( 5000 );
    //  cubo = new Cubo(70);
    //  piramide = new PiramidePentagonal(70, 50);
-    objetoply = new ObjPLY("./plys/beethoven.ply");
+   //  objetoply = new ObjPLY("./plys/beethoven.ply");
    //  objrevolucion = new ObjRevolucion("./plys/lata-pinf.ply", 80);
    //  objrevolucion1 = new ObjRevolucion("./plys/lata-psup.ply", 80);
    //  objrevolucion2 = new ObjRevolucion("./plys/lata-pcue.ply", 80);
-   cilindro = new Cilindro(80, 80, 150, 50);
-    // crear los objetos de la escena....
-    // .......completar: ...
-    // .....
 
+   cilindro = new Cilindro(20, 22, 50, 78);
+   cono = new Cono(20, 22, 50, 78);
+   cono1 = new Cono(10, 10, 20, 10);
+   cono2 = new Cono(10, 10, 30, 12);
 }
 
 //**************************************************************************
@@ -68,18 +68,26 @@ void Escena::dibujar()
    glScalef(Scale,Scale,Scale);
    // if (CubeEnabled) cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // if (PyramidEnabled) piramide -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // objrevolucion2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPushMatrix ();
+   glTranslatef(50, 0, -50);
    cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-    // COMPLETAR
-    //   Dibujar los diferentes elementos de la escena
-    // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
-    // y hacer 
-    // cubo->draw()
-    // o    piramide->draw()
-    
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(-50, 0,50);
+   cono -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(30, 0, -30);
+   cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(60, 0, -60);
+   cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();   
 }
 
 //**************************************************************************

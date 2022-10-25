@@ -8,6 +8,7 @@
 #include "objrevolucion.h"
 #include "piramidepentagonal.h"
 #include "cilindro.h"
+#include "cono.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION} menu;
 
@@ -15,9 +16,6 @@ class Escena
 {
 
    private:
-
-   
-
  // ** PARÁMETROS DE LA CÁMARA (PROVISIONAL)
        
        // variables que definen la posicion de la camara en coordenadas polares
@@ -48,7 +46,9 @@ class Escena
    ObjRevolucion * objrevolucion1 = nullptr;
    ObjRevolucion * objrevolucion2 = nullptr;
    Cilindro * cilindro = nullptr;
-
+   Cono * cono = nullptr;
+   Cono * cono1 = nullptr;
+   Cono * cono2 = nullptr;
 
    bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
    bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;

@@ -29,15 +29,12 @@ class ObjRevolucion : public Malla3D
     ObjRevolucion();
     ObjRevolucion(const std::string & archivo, int num_instancias);
     ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias) ;
-    void replicas(std::vector<Tupla3f> tabla_vertices, int num_instancias);
-private:
-    void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias);
-    void polos(std::vector<Tupla3f> archivo);
-    void crearTapa(std::vector<Tupla3f> perfil_original, int num_instancias, char polo);
-    void createColours(int size);
-    std::vector<Tupla3f> v_perfil ;
-    Tupla3f v_polo_n, v_polo_s;
-    bool polo_n = false, polo_s = false;
+    public:
+        void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias);
+        void createColours(int size);
+        std::vector<Tupla3f> v_perfil ;
+        Tupla3f v_polo_n, v_polo_s;
+        bool polo_n = false, polo_s = false;
 } ;
 
 

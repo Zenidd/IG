@@ -19,106 +19,81 @@ ObjRevolucion::ObjRevolucion() {}
 
 ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
    ply::read_vertices( archivo, v_perfil);
-   replicas(v_perfil, num_instancias);
    crearMalla(v_perfil, num_instancias);
    createColours(v.size());
-   std::cout << "Tam vector perfil_original" <<  v_perfil.size() << std::endl;
-   std::cout << "Tam vector vertices" << v.size() << std::endl;
-   std::cout << "Tam vector caras" << f.size() << std::endl;
-   
 }
 
 // *****************************************************************************
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
  
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias) {
-   // //Orden descendente
-   // polos(archivo);
-   // if (polo_s) {
-   //    v_polo_s = archivo[0];
-   //    archivo.erase(archivo.begin());
-   // }
-   // if (polo_n) {
-   //    v_polo_n = archivo[archivo.size()-1];
-   //    archivo.pop_back();
-   //    // std::cout << archivo[archivo.size()-1]<< std::endl;
-   // }
-   replicas(archivo, num_instancias);
-   crearMalla(archivo, num_instancias); 
-   
-   // if (polo_s){
-   //    archivo.push_back(v_polo_s);
-   //    ObjRevolucion::crearTapa(archivo, num_instancias, 's');
-   // }
-   // if (polo_n){
-   //    if (!polo_s) archivo.push_back({0.0f, 0.0f, 0.0f});
-   //    archivo.push_back(v_polo_n);
-   //    ObjRevolucion::crearTapa(archivo, num_instancias,'n');
-   // }
-   createColours(v.size());
-   std::cout << "Tam vector perfil_original" <<  archivo.size() << std::endl;
-   std::cout << "Tam vector vertices" << v.size() << std::endl;
-   std::cout << "Tam vector caras" << f.size() << std::endl;
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instancias) {
+   crearMalla(vector_perfil, num_instancias); 
+   createColours(this->v.size());
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias) {
-   float a = 0.0f,
-         b = 0.0f;
-   for(unsigned int i = 0; i < num_instancias; i++) //N
+   //Orden descendente 
+   //polo_sur
+   if (perfil_original.front()[X] == 0.0f && perfil_original.front()[Z] == 0.0f ) {
+      v_polo_s = perfil_original[0];
+      perfil_original.erase(perfil_original.begin());
+      polo_s = true;
+   }
+   //polo_norte
+   if (perfil_original[perfil_original.size()-1][X] == 0.0f && perfil_original[perfil_original.size()-1][Z] == 0.0f ) {
+      v_polo_n = perfil_original[perfil_original.size()-1];
+      perfil_original.pop_back();
+      polo_n = true;
+   }
+   int M = perfil_original.size();
+   int N = num_instancias;
+   // Vector de vertices
+   float angle = 0;
+   for(unsigned int i = 0; i < N; i++) //N
+      for(unsigned int j = 0; j < perfil_original.size(); j++){ //M
+         angle = 2*M_PI*i/N;
+         v.push_back({
+                     cos(angle)*perfil_original[j][X] + sin(angle)*perfil_original[j][Z],
+                     perfil_original[j][Y],
+                     cos(angle)*perfil_original[j][Z] - sin(angle)*perfil_original[j][X]
+                  
+         });
+      }
+   // Vector de caras
+   int a = 0,
+       b = 0;
+   for(unsigned int i = 0; i < N; i++) //N
       for(unsigned int j = 0; j < perfil_original.size()-1; j++){ //M
          a = perfil_original.size()*i+j;
-         b = perfil_original.size()*((i+1) % num_instancias ) + j; 
+         b = perfil_original.size()*((i+1) % N ) + j; 
          f.push_back({a, b, b+1});
          f.push_back({a, b+1, a+1});
       }
-}
+   int v_tam = v.size();
+   std::cout << "Tam vector v " << v.size() << std::endl;
+   // Añadir tapas
+   // N = N, perfil_original.size() = M
 
-void ObjRevolucion::replicas(std::vector<Tupla3f> perfil_original,  int num_instancias) {
-   float angle = 0;
-   for(unsigned int i = 0; i < num_instancias; i++) //N
-      for(unsigned int j = 0; j < perfil_original.size(); j++){ //M
-         angle = 2*M_PI*i/num_instancias;
-         v.push_back({perfil_original[j][Z]*(sin(angle)) + perfil_original[j][X]*(cos(angle)),
-                           perfil_original[j][Y],
-                           perfil_original[j][Z]*(cos(angle)) - perfil_original[j][X]*(sin(angle))
-         });
+   if (polo_s){
+      v.push_back(v_polo_s);
+      int iPN = v.size()-1;
+      for(unsigned int i = 0; i < N; i++){ //N
+         f.push_back({M*((i+1)%N), M * i  , iPN});
       }
-}
-
-
-void ObjRevolucion::crearTapa(std::vector<Tupla3f> perfil_original, int num_instancias, char polo) {
-   int a = 0,
-       b = 0;
-      switch (polo)
-   {
-	   case 's':
-      for(unsigned int i = 0; i < num_instancias; i++){ //N
-         a = i * perfil_original.size();
-         b = (i + 1) * perfil_original.size();
-         f.push_back({a, b, num_instancias});
+   }
+   if (polo_n){
+      v.push_back(v_polo_n);
+      int iPS = v.size()-1;
+      for(unsigned int i = 0; i < N; i++){ //N
+         float a = M *(i+1)-1;
+         float b = M*((i+1)%N)+M-1;
+         float c = iPS;
+         f.push_back({ a, b, c});
+         // std::cout << "{" << a << "," << b << "," << c << "}" << std::endl;
       }
-         break;
-	   case 'n':
-      for(unsigned int i = 0; i < num_instancias - 1; i++){ //N
-         a = (i + 1) * perfil_original.size() - 1;
-         b = (i + 2) * perfil_original.size() - 1;
-         f.push_back({num_instancias+1, b, a});
-      }
-         break;
 	}
-
 }
-
-void ObjRevolucion::polos(std::vector<Tupla3f> archivo) {
-   if (archivo.front()[X] == 0.0f && archivo.front()[Z] == 0.0f ) {
-      polo_s = true;
-   }
-   if (archivo[archivo.size()-1][X] == 0.0f && archivo[archivo.size()-1][Z] == 0.0f ) {
-      polo_n = true;
-   }
-}
-
 
 void ObjRevolucion::createColours(int size)
 {

@@ -2,13 +2,13 @@
 //
 // Informática Gráfica (Grado Informática)
 //
-// Archivo: Cubo.h
+// Archivo: cono.h
 
 //
 // #############################################################################
 
-#ifndef CILINDRO_H_INCLUDED
-#define CILINDRO_H_INCLUDED
+#ifndef CONO_H_INCLUDED
+#define CONO_H_INCLUDED
 
 #include "auxiliar.h"
 #include "objrevolucion.h"
@@ -22,12 +22,12 @@
 
 // *****************************************************************************
 
-class Cilindro : public ObjRevolucion {
+class Cono : public ObjRevolucion {
    public:
-      Cilindro( const int num_vert_perfil ,
+      Cono( const int num_vert_perfil ,
       const int num_instancias_perf ,
       const float altura , const float radio );
-      void cilindro_vertex(int num_vert_perfil, float radio, float altura );
+      void cono_vertex(int num_vert_perfil, float radio, float altura );
 };
 
 

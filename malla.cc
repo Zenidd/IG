@@ -21,7 +21,6 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    if ( id_vbo_c_l == 0 ) id_vbo_c_l = CrearVBO(GL_ARRAY_BUFFER, sizeof(c_l[0])*c_l.size(), c_l.data());
    if ( id_vbo_c_p == 0 ) id_vbo_c_p = CrearVBO(GL_ARRAY_BUFFER, sizeof(c_p[0])*c_p.size(), c_p.data());
 
-std::cout << v.size() << std::endl;
 
    glEnableClientState( GL_COLOR_ARRAY );
 
@@ -37,10 +36,7 @@ std::cout << v.size() << std::endl;
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
 
 
-
-
    if (LinesEnabled){
-      std::cout << "LINEAS ACTIVAS" << std::endl;
       if ( id_vbo_c_l != 0 ) {
          glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_l); 
          glColorPointer( 3, GL_FLOAT , 0, 0 );
