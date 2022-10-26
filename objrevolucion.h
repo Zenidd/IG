@@ -31,7 +31,7 @@ class ObjRevolucion : public Malla3D
     ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias) ;
     public:
         void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias);
-        void createColours(int size);
+        void createColours(int size, Tupla3f color_s, Tupla3f color_l, Tupla3f color_p) ;
         std::vector<Tupla3f> v_perfil ;
         Tupla3f v_polo_n, v_polo_s;
         bool polo_n = false, polo_s = false;

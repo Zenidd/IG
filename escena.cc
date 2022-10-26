@@ -18,17 +18,25 @@ Escena::Escena()
     Scale             = 1.0 ; 
 
     ejes.changeAxisSize( 5000 );
-   //  cubo = new Cubo(70);
-   //  piramide = new PiramidePentagonal(70, 50);
-   //  objetoply = new ObjPLY("./plys/beethoven.ply");
+    cubo = new Cubo(70);
+    piramide = new PiramidePentagonal(70, 50);
+    objetoply = new ObjPLY("./plys/untitled.ply");
    //  objrevolucion = new ObjRevolucion("./plys/lata-pinf.ply", 80);
    //  objrevolucion1 = new ObjRevolucion("./plys/lata-psup.ply", 80);
    //  objrevolucion2 = new ObjRevolucion("./plys/lata-pcue.ply", 80);
 
-   cilindro = new Cilindro(20, 22, 50, 78);
-   cono = new Cono(20, 22, 50, 78);
-   cono1 = new Cono(10, 10, 20, 10);
-   cono2 = new Cono(10, 10, 30, 12);
+
+   cono = new Cono(10, 4, 30, 10);
+   cono1 = new Cono(10, 4, 60, 20);
+   cono2 = new Cono(10, 4, 120, 30);
+   esfera = new Esfera(100, 150, 10);
+   esfera1 = new Esfera(100, 150, 20);
+   esfera2 = new Esfera(100, 150, 30);
+   
+
+   cilindro = new Cilindro(20, 20, 4, 300);
+   cilindro1 = new Cilindro(20, 20, 4, 600);
+
 }
 
 //**************************************************************************
@@ -66,27 +74,49 @@ void Escena::dibujar()
 	change_observer();
    ejes.draw();
    glScalef(Scale,Scale,Scale);
-   // if (CubeEnabled) cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // if (PyramidEnabled) piramide -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   if (CubeEnabled) cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   if (PyramidEnabled) piramide -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPushMatrix ();
+   glTranslatef(0, 0, -100);
+   if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
    // objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    // objrevolucion2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+
    glPushMatrix ();
-   glTranslatef(50, 0, -50);
-   cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(-50, 0,50);
+   glTranslatef(0, 0, -50);
    cono -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    glPopMatrix ();
    glPushMatrix ();
-   glTranslatef(30, 0, -30);
+   glTranslatef(0, 0, 0);
    cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    glPopMatrix ();
    glPushMatrix ();
-   glTranslatef(60, 0, -60);
+   glTranslatef(0, 0, 60);
    cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(0, 50, -50);
+   esfera -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(0, 100, 0);
+   esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+   glTranslatef(0, 160, 60);
+   esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+   glTranslatef(0, -10, 0);
+   cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   glPopMatrix ();   
+
+   glPushMatrix ();
+   glTranslatef(0, -20, 0);
+   cilindro1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    glPopMatrix ();   
 }
 
@@ -169,11 +199,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          }
          break ;
       case 'Z' :
-         Scale+=5;
+         Scale+=2;
          cout << "Scale equal to " << Scale << endl;
          break ;
       case 'X' :
-         Scale-=5;
+         Scale-=2;
          cout << "Scale equal to " << Scale << endl;
          break ;
       // COMPLETAR con los diferentes opciones de teclado 

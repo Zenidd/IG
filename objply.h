@@ -25,6 +25,7 @@ class ObjPLY: public Malla3D {
 public:
  ObjPLY( const std::string & nombre_archivo ) ;
  void createColours(int size);
+ void createColours(int size, Tupla3f color_s, Tupla3f color_l, Tupla3f color_p);
  
 };
 

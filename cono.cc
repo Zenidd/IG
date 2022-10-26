@@ -5,8 +5,8 @@
 
 Cono::Cono( const int num_vert_perfil, const int num_instancias_perf, const float altura , const float radio )
 {   cono_vertex(num_vert_perfil, radio, altura );
-   crearMalla(v_perfil, num_vert_perfil); 
-   createColours(v.size());
+   crearMalla(v_perfil, num_instancias_perf); 
+   createColours(v.size(), {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
 }
 
 void Cono::cono_vertex(const int num_vert_perfil, const float radio, const float altura )

@@ -48,7 +48,7 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
    
    if (PointsEnabled){
       if ( id_vbo_c_s != 0 ) {
-         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_s);
+         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_p);
          glColorPointer( 3, GL_FLOAT , 0, 0 );
          glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
@@ -59,7 +59,7 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled)
 
    if (SolidEnabled){
       if ( id_vbo_c_p != 0 ) {
-         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_p); 
+         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_c_s); 
          glColorPointer( 3, GL_FLOAT , 0, 0 );
          glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }

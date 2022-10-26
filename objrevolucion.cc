@@ -20,7 +20,7 @@ ObjRevolucion::ObjRevolucion() {}
 ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
    ply::read_vertices( archivo, v_perfil);
    crearMalla(v_perfil, num_instancias);
-   createColours(v.size());
+   createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});
 }
 
 // *****************************************************************************
@@ -29,7 +29,7 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
  
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instancias) {
    crearMalla(vector_perfil, num_instancias); 
-   createColours(this->v.size());
+   createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias) {
@@ -95,15 +95,14 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
 	}
 }
 
-void ObjRevolucion::createColours(int size)
+void ObjRevolucion::createColours(int size, Tupla3f color_s, Tupla3f color_l, Tupla3f color_p)
 {
    c_s.resize(size);
    c_l.resize(size);
    c_p.resize(size);
 
-   float R = 0.0f, G = 0.0f, B = 0.0f;
 
-   for( unsigned i = 0 ; i < size ; i++ ) c_s[i] = {1, G, B} ;
-   for( unsigned i = 0 ; i < size ; i++ ) c_l[i] = {R, 1, B} ;
-   for( unsigned i = 0 ; i < size ; i++ ) c_p[i] = {R, G, 1} ;
+   for( unsigned i = 0 ; i < size ; i++ ) c_s[i] = color_s ;
+   for( unsigned i = 0 ; i < size ; i++ ) c_l[i] = color_l ;
+   for( unsigned i = 0 ; i < size ; i++ ) c_p[i] = color_p ;
 }

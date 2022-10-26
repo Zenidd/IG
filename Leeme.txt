@@ -20,7 +20,7 @@ COMENTARIOS
 glu_flag_macos  := /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
 
 --------------------
-ToDo:
-La parte del cull faces en la inicialización
-centro de la base del cuadrado 
-caras al reves  
+Comentarios primera corrección (19/10/2022):
+La parte del cull faces en la inicialización - done
+caras al reves en cuadrado/piramide pentagonal  - done
+centro de la base del cuadrado en el origen  - done 

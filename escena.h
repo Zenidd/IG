@@ -9,6 +9,7 @@
 #include "piramidepentagonal.h"
 #include "cilindro.h"
 #include "cono.h"
+#include "esfera.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION} menu;
 
@@ -46,9 +47,13 @@ class Escena
    ObjRevolucion * objrevolucion1 = nullptr;
    ObjRevolucion * objrevolucion2 = nullptr;
    Cilindro * cilindro = nullptr;
+   Cilindro * cilindro1 = nullptr;
    Cono * cono = nullptr;
    Cono * cono1 = nullptr;
    Cono * cono2 = nullptr;
+   Esfera * esfera = nullptr;
+   Esfera * esfera1 = nullptr;
+   Esfera * esfera2 = nullptr;
 
    bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
    bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
