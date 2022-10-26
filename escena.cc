@@ -34,8 +34,8 @@ Escena::Escena()
    esfera2 = new Esfera(100, 150, 30);
    
 
-   cilindro = new Cilindro(20, 20, 4, 300);
-   cilindro1 = new Cilindro(20, 20, 4, 600);
+   cilindro = new Cilindro(20, 20, 180, 30);
+   cilindro1 = new Cilindro(20, 20, 1, 600);
 
 }
 
@@ -110,12 +110,12 @@ void Escena::dibujar()
    glPopMatrix ();
 
    glPushMatrix ();
-   glTranslatef(0, -10, 0);
+   glTranslatef(200, 0, 0);
    cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    glPopMatrix ();   
 
    glPushMatrix ();
-   glTranslatef(0, -20, 0);
+   glTranslatef(0, 0, 0);
    cilindro1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
    glPopMatrix ();   
 }

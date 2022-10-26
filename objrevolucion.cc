@@ -71,7 +71,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
          f.push_back({a, b+1, a+1});
       }
    int v_tam = v.size();
-   std::cout << "Tam vector v " << v.size() << std::endl;
+   // std::cout << "Tam vector v " << v.size() << std::endl;
    // Añadir tapas
    // N = N, perfil_original.size() = M
 
