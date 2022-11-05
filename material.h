@@ -22,10 +22,10 @@
 
 class Material {
    public:
-      Tupla4f ambiente= { 0.7, 0.7, 0.7, 1.0 };
-      Tupla4f difuso=  { 0.1, 0.5, 0.8, 1.0 };
-      Tupla4f especular=  { 0.5, 0.5, 0.5, 0.5 };
-      GLfloat brillo= 50.0f;
+      Tupla4f ambiente= { 0.0, 0.0, 1.0, 1.0 };
+      Tupla4f difuso=  { 0.0, 0.0, 1.0, 1.0 };
+      Tupla4f especular=  { 0.0, 0.0, 1.0, 1.0 };
+      GLfloat brillo= 80.0f;
       // Tupla4f ambiente;
       // Tupla4f difuso;
       // Tupla4f especular;

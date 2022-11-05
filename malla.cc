@@ -72,16 +72,17 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
 
    if (LightsEnabled){
       m.aplicar ();
+
       if ( id_vbo_n_ver != 0 ) {
          glBindBuffer(GL_ARRAY_BUFFER , id_vbo_n_ver); 
-         glNormalPointer( GL_FLOAT, sizeof(nv[0]) , nv[0]);
+         // glNormalPointer( GL_FLOAT, sizeof(nv[0]) , nv[0]);
+         glNormalPointer( GL_FLOAT, 0, 0);
          glBindBuffer( GL_ARRAY_BUFFER , 0 );
       }
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
+      glEnableClientState( GL_NORMAL_ARRAY );
       glDrawElements( GL_TRIANGLES , 3*f.size(), GL_UNSIGNED_INT , 0 ) ;
-
-      std::cout << "El brillo de mi material es " << m.brillo << std::endl;
+      glDisableClientState( GL_NORMAL_ARRAY );
    } 
 
    // desactivar buffer: VBO de triángulos
@@ -134,8 +135,8 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram)
 
 void Malla3D::setMaterial(Material mat)
 {
-   m.brillo    = 55.0f;
-   m.ambiente  = {35.0f, 0.0f, 0.0f, 0.0f};
-   m.difuso    = {35.0f, 0.0f, 0.0f, 0.0f};
-   m.especular = {35.0f, 0.0f, 0.0f, 0.0f};
+   // this->m.brillo    = mat.brillo;
+   // m.ambiente        = mat.ambiente;
+   // m.difuso          = mat.difuso;
+   // m.especular       = mat.especular;
 }
