@@ -1,0 +1,9 @@
+Voy a realizar una escena ambientada en el antiguo egipto en la que 3 personajes reunidos observan en el cielo 3 soles de distinto color que se muestran simultaneamente sobre 3 pirámides.
+
+Algunas de las construcciones (estatuas de dioses/entes relevantes) van a ser PLYs descargados de internet. Generaré columnas con detalles por revolución. La P5 será la textura de las pirámides/suelo. 
+
+Estas columnas van a tener en su parte superior una parte movil que rota constantemente dejando una estela tras de si.
+
+Habrá tres cámaras, una en la posición de los personajes que observan los tres solas, otras para visualizar los y otra que mostrará la escena completa (P6).
+
+Cada uno de los soles será una luz posicional y una direccional apuntará a los personajes que serán PLYs.

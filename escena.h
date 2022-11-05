@@ -3,6 +3,9 @@
 
 #include "ejes.h"
 #include "malla.h"
+#include "luz.h"
+#include "luzdireccional.h"
+#include "luzposicional.h"
 #include "cubo.h"
 #include "objply.h"
 #include "objrevolucion.h"
@@ -11,7 +14,7 @@
 #include "cono.h"
 #include "esfera.h"
 
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION} menu;
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION} menu;
 
 class Escena
 {
@@ -38,6 +41,10 @@ class Escena
    void clear_window();
 
    menu modoMenu=NADA;
+   // Luces de le escena
+   LuzDireccional * luzdireccional = nullptr;
+   LuzPosicional * luzposicional = nullptr;
+
    // Objetos de la escena
    Ejes ejes;
    Cubo * cubo = nullptr ;
@@ -55,9 +62,12 @@ class Escena
    Esfera * esfera1 = nullptr;
    Esfera * esfera2 = nullptr;
 
+
    bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
    bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
-   
+
+    bool LightsEnabled = false;
+
    public:
     Escena();
 	void inicializar( int UI_window_width, int UI_window_height );

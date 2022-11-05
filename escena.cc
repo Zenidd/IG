@@ -2,6 +2,7 @@
 #include "auxiliar.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
+#include "luz.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -17,25 +18,33 @@ Escena::Escena()
     Observer_angle_y  = 0.0 ;
     Scale             = 1.0 ; 
 
+
+   // EJES
     ejes.changeAxisSize( 5000 );
-    cubo = new Cubo(70);
-    piramide = new PiramidePentagonal(70, 50);
-    objetoply = new ObjPLY("./plys/untitled.ply");
+
+   // LUCES
+
+   luzdireccional = new LuzDireccional({0.0f, 0.0f}, GL_LIGHT0, {0.4f, 0.0f, 0.0f, 1.0f}, {0.45f, 0.0f, 0.0f, 1.0f} ,{0.50f, 0.0f, 0.0f, 1.0f});   
+   luzposicional = new LuzPosicional({0.0f, 0.0f, 400.0f}, GL_LIGHT1, {0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 0.5f} ,{1.0f, 1.0f, 1.0f, 0.5f});   
+   // Luz ambiental es todo 0.0f menos 
+
+   // OBJETOS
+   objrevolucion = new ObjRevolucion("./plys/peon.ply", 80);
+
+   //  cubo = new Cubo(70);
+   //  piramide = new PiramidePentagonal(70, 50);
+   //  objetoply = new ObjPLY("./plys/untitled.ply");
    //  objrevolucion = new ObjRevolucion("./plys/lata-pinf.ply", 80);
    //  objrevolucion1 = new ObjRevolucion("./plys/lata-psup.ply", 80);
    //  objrevolucion2 = new ObjRevolucion("./plys/lata-pcue.ply", 80);
-
-
    cono = new Cono(10, 4, 30, 10);
-   cono1 = new Cono(10, 4, 60, 20);
-   cono2 = new Cono(10, 4, 120, 30);
-   esfera = new Esfera(100, 150, 10);
-   esfera1 = new Esfera(100, 150, 20);
-   esfera2 = new Esfera(100, 150, 30);
-   
-
-   cilindro = new Cilindro(20, 20, 180, 30);
-   cilindro1 = new Cilindro(20, 20, 1, 600);
+   // cono1 = new Cono(10, 4, 60, 20);
+   // cono2 = new Cono(10, 4, 120, 30);
+   esfera = new Esfera(10, 10, 10);
+   // esfera1 = new Esfera(100, 150, 20);
+   // esfera2 = new Esfera(100, 150, 30);
+   // cilindro = new Cilindro(20, 20, 180, 30);
+   // cilindro1 = new Cilindro(20, 20, 1, 600);
 
 }
 
@@ -57,6 +66,9 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	glViewport( 0, 0, UI_window_width, UI_window_height );
 
    glEnable(GL_CULL_FACE);
+   glEnable(GL_NORMALIZE); // Añadido para evitar que las normales varien con glScalef
+   glShadeModel(GL_SMOOTH);
+   // glShadeModel(GL_FLAT);
 }
 
 
@@ -72,52 +84,63 @@ void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
+   glPushMatrix ();
    ejes.draw();
+   glPopMatrix ();
    glScalef(Scale,Scale,Scale);
-   if (CubeEnabled) cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   if (PyramidEnabled) piramide -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPushMatrix ();
-   glTranslatef(0, 0, -100);
-   if (OplyEnabled) objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   // objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // objrevolucion2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   if (LightsEnabled) glEnable(GL_LIGHTING); 
+   else glDisable(GL_LIGHTING); 
 
-   glPushMatrix ();
-   glTranslatef(0, 0, -50);
-   cono -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(0, 0, 0);
-   cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(0, 0, 60);
-   cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(0, 50, -50);
-   esfera -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(0, 100, 0);
-   esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-   glPushMatrix ();
-   glTranslatef(0, 160, 60);
-   esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();
-
-   glPushMatrix ();
-   glTranslatef(200, 0, 0);
-   cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();   
+   // luzdireccional.activar();
+   luzposicional->activar();
 
    glPushMatrix ();
    glTranslatef(0, 0, 0);
-   cilindro1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   glPopMatrix ();   
+   objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+
+   glPushMatrix ();
+   glTranslatef(50, 0, 0);
+   objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+
+   glPushMatrix ();
+   glTranslatef(0, 0, 10);
+   cono -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   // glPushMatrix ();
+   // glTranslatef(0, 0, 0);
+   // cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();
+   // glPushMatrix ();
+   // glTranslatef(0, 0, 60);
+   // cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();
+   // glPushMatrix ();
+   glTranslatef(0, 0, 20);
+   esfera -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+   // glPushMatrix ();
+   // glTranslatef(0, 100, 0);
+   // esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();
+   // glPushMatrix ();
+   // glTranslatef(0, 160, 60);
+   // esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();
+
+   // glPushMatrix ();
+   // glTranslatef(200, 0, 0);
+   // cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();   
+
+   // glPushMatrix ();
+   // glTranslatef(0, 0, 0);
+   // cilindro1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
+   // glPopMatrix ();   
 }
 
 //**************************************************************************
@@ -142,58 +165,41 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             salir=true ;
          }
          break ;
-      case 'O' :
-         cout << "MODO SEL DE OBJETO" << endl;
-         modoMenu=SELOBJETO; 
-         break ;
       case 'V' :
          cout << "MODO VISUALIZACION" << endl;
          modoMenu=SELVISUALIZACION;
-         break ;
-      case 'C' :
-         if (modoMenu==SELOBJETO) 
-            if (!CubeEnabled) CubeEnabled = true;
-            else CubeEnabled = false;
-         else {
-            cout << "Primero activa modo de Sel. Objeto (O)" << endl;
-         }
-         break ;
+         break ;     
       case 'P' :
-         if (modoMenu==SELOBJETO) 
-            if (!PyramidEnabled) PyramidEnabled = true;
-            else PyramidEnabled = false;
-         else {
-            cout << "Primero activa modo de Sel. Objeto (O)" << endl;
+         if (modoMenu==SELVISUALIZACION){
+            PointsEnabled = !PointsEnabled;
+            LightsEnabled = false;
          }
-         break ;
-      case 'K' :
-         if (modoMenu==SELOBJETO) 
-            if (!OplyEnabled) OplyEnabled = true;
-            else OplyEnabled = false;
-         else {
-            cout << "Primero activa modo de Sel. Objeto (O)" << endl;
-         }
-         break ;         
-      case 'D' :
-         if (modoMenu==SELVISUALIZACION) 
-            if (!PointsEnabled) PointsEnabled = true;
-            else PointsEnabled = false;
          else {
             cout << "Primero activa modo de visualizacion (V)" << endl;
          }
          break ;
       case 'L' :
-         if (modoMenu==SELVISUALIZACION) 
-            if (!LinesEnabled) LinesEnabled = true;
-            else LinesEnabled = false;
+         if (modoMenu==SELVISUALIZACION){
+            LinesEnabled = !LinesEnabled;
+            LightsEnabled = false;
+         }
          else {
             cout << "Primero activa modo de visualizacion (V)" << endl;
          }
          break ;
       case 'S' :
-         if (modoMenu==SELVISUALIZACION) 
-            if (!SolidEnabled) SolidEnabled = true;
-            else SolidEnabled = false;
+         if (modoMenu==SELVISUALIZACION){
+            SolidEnabled = !SolidEnabled;
+            LightsEnabled = false;
+         }
+         else {
+            cout << "Primero activa modo de visualizacion (V)" << endl;
+         }
+      case 'I' :
+         if (modoMenu==SELVISUALIZACION){
+            LightsEnabled = true;
+            modoMenu = SELILUMINACION;
+         }
          else {
             cout << "Primero activa modo de visualizacion (V)" << endl;
          }

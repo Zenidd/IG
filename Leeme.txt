@@ -24,3 +24,23 @@ Comentarios primera corrección (19/10/2022):
 La parte del cull faces en la inicialización - done
 caras al reves en cuadrado/piramide pentagonal  - done
 centro de la base del cuadrado en el origen  - done 
+
+
+--------------------
+Comentarios primera corrección (26/10/2022):
+fabs(a - b) < epsilon (La busqueda de polos debe implementarse con fabs) - To fix (P2)
+Los PLYs solo se interpretan en un sentido - To fix (P2)
+
+--------------------
+
+
+Voy a realizar una escena ambientada en el antiguo egipto en la que 3 personajes reunidos observan en el cielo 3 soles de distinto color que se muestran simultaneamente sobre 3 pirámides.
+
+Algunas de las construcciones (estatuas de dioses/entes relevantes) van a ser PLYs descargados de internet. Generaré columnas con detalles por revolución. La P5 será la textura de las pirámides/suelo. 
+
+Estas columnas van a tener en su parte superior una parte movil que rota constantemente dejando una estela tras de si.
+
+Habrá tres cámaras, una en la posición de los personajes que observan los tres solas, otras para visualizar los y otra que mostrará la escena completa (P6).
+
+Cada uno de los soles será una luz posicional y una direccional apuntará a los personajes que serán PLYs.
+

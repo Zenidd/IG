@@ -11,6 +11,7 @@
 #define MALLA3D_H_INCLUDED
 
 #include "auxiliar.h"
+#include "material.h"
 
 // *****************************************************************************
 //
@@ -21,12 +22,16 @@
 class Malla3D
 {
    public:
+      Material m;
       // función que dibuja el objeto en modo diferido (usando VBOs)
-      void draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled) ;
-
-   public:
+      void setMaterial(Material mat);
+      void draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, bool LightsEnabled) ;
       std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
       std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
+
+      std::vector<Tupla4f> c;
+      std::vector<Tupla3f> nv;
+
 
       std::vector<Tupla3f> c_s ; // Array de colores visualizacion solidos
       std::vector<Tupla3f> c_l ; // Array de colores visualizacion lineas
@@ -39,9 +44,10 @@ class Malla3D
       GLuint id_vbo_c_p = 0;
       GLuint id_vbo_c_s = 0;
 
-   // completar P1: tabla de colores
-   // Completar P1: vbo y método asociado
-   GLuint CrearVBO( GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram);
+      GLuint id_vbo_n_ver = 0;
+
+      void calcularNormales();
+      GLuint CrearVBO( GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram);
 } ;
 
 
