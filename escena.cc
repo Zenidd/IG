@@ -24,8 +24,8 @@ Escena::Escena()
 
    // LUCES
 
-   luzdireccional = new LuzDireccional({0.0f, 0.0f}, GL_LIGHT0, {0.4f, 0.0f, 0.0f, 1.0f}, {0.45f, 0.0f, 0.0f, 1.0f} ,{0.50f, 0.0f, 0.0f, 1.0f});   
-   luzposicional = new LuzPosicional({0.0f, 0.0f, 400.0f}, GL_LIGHT1, {0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 0.5f} ,{1.0f, 1.0f, 1.0f, 0.5f});   
+   // luzdireccional = new LuzDireccional({0.0f, 0.0f}, GL_LIGHT0, {0.4f, 0.0f, 0.0f, 1.0f}, {0.45f, 0.0f, 0.0f, 1.0f} ,{0.50f, 0.0f, 0.0f, 1.0f});   
+   luzposicional = new LuzPosicional({0.0f, 0.0f, 200.0f}, GL_LIGHT0, {0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f} ,{1.0f, 1.0f, 1.0f, 1.0f});   
    // Luz ambiental es todo 0.0f menos 
 
    // OBJETOS
@@ -198,6 +198,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'I' :
          if (modoMenu==SELVISUALIZACION){
             LightsEnabled = true;
+            LinesEnabled = false;
+            PointsEnabled = false;
+            SolidEnabled = false;
             modoMenu = SELILUMINACION;
          }
          else {
