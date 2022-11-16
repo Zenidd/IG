@@ -30,7 +30,6 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instancias) {
    crearMalla(vector_perfil, num_instancias); 
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});
-   setMaterial(m);
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias) {
@@ -72,7 +71,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
          f.push_back({a, b+1, a+1});
       }
    int v_tam = v.size();
-   // std::cout << "Tam vector v " << v.size() << std::endl;
+   std::cout << "Tam vector v " << v.size() << std::endl;
    // Añadir tapas
    // N = N, perfil_original.size() = M
 

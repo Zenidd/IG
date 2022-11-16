@@ -22,6 +22,7 @@ class Luz
 {
    public:
       void activar() ;
+   protected:
       GLenum id;
       Tupla4f posicion; // w == 0 direccional, w =! 0 posicional
       Tupla4f colorAmbiente;

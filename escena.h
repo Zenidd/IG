@@ -36,6 +36,7 @@ class Escena
     // Transformación de cámara
 	void change_projection( const float ratio_xy );
 	void change_observer();
+  void disableLights();
     
 
    void clear_window();
@@ -48,25 +49,49 @@ class Escena
    // Objetos de la escena
    Ejes ejes;
    Cubo * cubo = nullptr ;
+
    PiramidePentagonal * piramide= nullptr ;
+
    ObjPLY * objetoply= nullptr ;
+   ObjPLY * mountainPLY= nullptr ;
+
    ObjRevolucion * objrevolucion = nullptr;
    ObjRevolucion * objrevolucion1 = nullptr;
    ObjRevolucion * objrevolucion2 = nullptr;
+
    Cilindro * cilindro = nullptr;
    Cilindro * cilindro1 = nullptr;
-   Cono * cono = nullptr;
+   Cono * cono0 = nullptr;
    Cono * cono1 = nullptr;
    Cono * cono2 = nullptr;
-   Esfera * esfera = nullptr;
+
+   Esfera * esfera0 = nullptr;
    Esfera * esfera1 = nullptr;
    Esfera * esfera2 = nullptr;
 
+  Material *blanco_d = nullptr;
+  Material *negro_e = nullptr;
 
-   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
-   bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
 
-    bool LightsEnabled = false;
+  bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
+  bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
+
+  bool alpha_l = false, beta_l = false;
+  
+  bool LightsEnabled = false;
+
+  bool gl_light0_enabled = true;
+  bool gl_light1_enabled = true;
+  bool gl_light2_enabled = false;
+  bool gl_light3_enabled = false;
+  bool gl_light4_enabled = false;
+  bool gl_light5_enabled = false;
+  bool gl_light6_enabled = false;
+  bool gl_light7_enabled = false;
+  
+  float var_a = 0.0f, var_b=0.0f;
+
+
 
    public:
     Escena();

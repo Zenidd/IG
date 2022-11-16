@@ -11,40 +11,108 @@
 Escena::Escena()
 {
 
-    Front_plane       = 50.0;
-    Back_plane        = 2000.0;
-    Observer_distance = 4*Front_plane;
-    Observer_angle_x  = 0.0 ;
-    Observer_angle_y  = 0.0 ;
-    Scale             = 1.0 ; 
+   Front_plane       = 50.0;
+   Back_plane        = 2000.0;
+   Observer_distance = 6*Front_plane;
+   Observer_angle_x  = 0.0 ;
+   Observer_angle_y  = 0.0 ;
+   Scale             = 1.0 ; 
 
 
    // EJES
-    ejes.changeAxisSize( 5000 );
+   ejes.changeAxisSize( 5000 );
 
    // LUCES
+   Tupla3f posicionLuz = Tupla3f(0.0f, 90.0f, -110.0f);
+   Tupla4f ambiental(0.0, 0.0, 0.0, 0.0);
+   Tupla4f difusa(0.84,0,0.9,1.0);
+   Tupla4f especular(0.84,0,0.9,1.0);
 
-   // luzdireccional = new LuzDireccional({0.0f, 0.0f}, GL_LIGHT0, {0.4f, 0.0f, 0.0f, 1.0f}, {0.45f, 0.0f, 0.0f, 1.0f} ,{0.50f, 0.0f, 0.0f, 1.0f});   
-   luzposicional = new LuzPosicional({0.0f, 0.0f, 200.0f}, GL_LIGHT0, {0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f} ,{1.0f, 1.0f, 1.0f, 1.0f});   
-   // Luz ambiental es todo 0.0f menos 
+   this->luzposicional = new LuzPosicional(posicionLuz, GL_LIGHT0, ambiental, especular, difusa);
+
+
+   Tupla2f orientacion(0.0f, 0.0f);
+   Tupla4f d_ambiental(0.0, 0.0, 0.0, 0.0);
+   Tupla4f d_difusa(1.0,1.0,1.0,1.0);
+   Tupla4f d_especular(1.0,1.0,1.0,1.0);
+
+   this->luzdireccional = new LuzDireccional(orientacion, GL_LIGHT1, d_ambiental, d_especular, d_difusa);
+
+   // MATERIALES
+
+   Material defecto;
+
+   Tupla4f m_ambiental(1.0, 1.0, 1.0, 1.0);
+   Tupla4f m_difusa(1.0, 1.0, 1.0, 1.0);
+   Tupla4f m_especular(0.0, 0.0, 0.0, 0.0);
+   Material blanco_d(m_ambiental, m_especular, m_difusa ,64.0);
+
+
+   m_ambiental = {0.2, 0.2, 0.2, 1.0};
+   m_difusa = {0.2, 0.2, 0.2, 0.3};
+   m_especular = {1.0, 1, 1, 1.0};
+   Material negro_e(m_ambiental, m_especular, m_difusa, 40.0);
+
+
+   m_ambiental = {0.38,0.39,0.35, 0.1};
+   m_difusa = {0.38,0.39,0.35,0.5};
+   m_especular = {0.38,0.39,0.35,1.0};
+   Material egypt_m(m_ambiental, m_especular, m_difusa, 50.0);
+
+   m_ambiental = {0.7, 0.0, 0.0, 0.1};
+   m_difusa = {0.940, 0.0564, 0.0564, 0.5};
+   m_especular = {0.940, 0.0564, 0.0564, 1.0};
+   Material sun0(m_ambiental, m_especular, m_difusa, 50.0);
+
+   m_ambiental = {0.0, 0.0, 0.0, 0.1};
+   m_difusa = {1.00, 0.785, 0.0800, 0.5};
+   m_especular = {1.00, 0.785, 0.0800, 1.0};
+   Material sun1(m_ambiental, m_especular, m_difusa, 50.0);
+
+   m_ambiental = {0.00604, 0.00120, 0.0100, 1.0};
+   m_difusa = {0.00604, 0.00120, 0.0100, 1.0};
+   m_especular = {0.00604, 0.00120, 0.0100, 1.0};
+   Material sun2(m_ambiental, m_especular, m_difusa, 50.0);
+
+   m_ambiental = {0.76,0.7,0.5, 1.0};
+   m_difusa = {0.76,0.7,0.5, 1.0};
+   m_especular = {0.76,0.7,0.5, 1.0};
+   Material floor(m_ambiental, m_especular, m_difusa, 50.0);
+
 
    // OBJETOS
    objrevolucion = new ObjRevolucion("./plys/peon.ply", 80);
+   objrevolucion1 = new ObjRevolucion("./plys/peon.ply", 80);
+   
+   objetoply = new ObjPLY("./plys/untitled.ply");
+   mountainPLY = new ObjPLY("./plys/mountain.ply");
 
-   //  cubo = new Cubo(70);
-   //  piramide = new PiramidePentagonal(70, 50);
-   //  objetoply = new ObjPLY("./plys/untitled.ply");
-   //  objrevolucion = new ObjRevolucion("./plys/lata-pinf.ply", 80);
-   //  objrevolucion1 = new ObjRevolucion("./plys/lata-psup.ply", 80);
-   //  objrevolucion2 = new ObjRevolucion("./plys/lata-pcue.ply", 80);
-   cono = new Cono(10, 4, 30, 10);
-   // cono1 = new Cono(10, 4, 60, 20);
-   // cono2 = new Cono(10, 4, 120, 30);
-   esfera = new Esfera(10, 10, 10);
-   // esfera1 = new Esfera(100, 150, 20);
-   // esfera2 = new Esfera(100, 150, 30);
-   // cilindro = new Cilindro(20, 20, 180, 30);
-   // cilindro1 = new Cilindro(20, 20, 1, 600);
+   cono0 = new Cono(10, 4, 40, 40);
+   cono1 = new Cono(10, 4, 50, 50);
+   cono2 = new Cono(10, 4, 60, 60);
+
+   esfera0 = new Esfera(30, 50, 20);
+   esfera1 = new Esfera(30, 50, 20);
+   esfera2 = new Esfera(30, 50, 20);
+
+   cilindro = new Cilindro(30, 20, 4, 1000);
+
+
+   this->esfera0->setMaterial(sun0);
+   this->esfera1->setMaterial(sun1);
+   this->esfera2->setMaterial(sun2);
+
+   this->cilindro->setMaterial(floor);
+
+   this->objetoply->setMaterial(egypt_m);
+   this->mountainPLY->setMaterial(egypt_m);
+
+   this->objrevolucion->setMaterial(blanco_d);
+   this->objrevolucion1->setMaterial(negro_e);
+
+   this->cono0->setMaterial(egypt_m);
+   this->cono1->setMaterial(egypt_m);
+   this->cono2->setMaterial(egypt_m);
 
 }
 
@@ -56,7 +124,8 @@ Escena::Escena()
 
 void Escena::inicializar( int UI_window_width, int UI_window_height )
 {
-	glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+	glClearColor( 0.591, 0.767, 0.910, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+	// glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
 	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
 	Width  = UI_window_width/10;
@@ -84,65 +153,138 @@ void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
-   glPushMatrix ();
-   ejes.draw();
-   glPopMatrix ();
+   glPushMatrix();
+      if (LightsEnabled) glDisable(GL_LIGHTING);
+      ejes.draw();
+      if (LightsEnabled) glEnable(GL_LIGHTING);
+   glPopMatrix();
    glScalef(Scale,Scale,Scale);
    if (LightsEnabled) glEnable(GL_LIGHTING); 
    else glDisable(GL_LIGHTING); 
 
-   // luzdireccional.activar();
+
+   // Activación luces
    luzposicional->activar();
+   glPushMatrix();
+      if(alpha_l){
+         luzdireccional->variarAnguloAlpha(var_a);
+         var_a = 0;
+      }
+      if(beta_l){
+         luzdireccional->variarAnguloBeta(var_b);
+         var_b = 0;
+      } 
+      luzdireccional->cambiarAngulo();
+      luzdireccional->activar();
+   glPopMatrix();
+
+
+   //Interruptores Luces
+   if(LightsEnabled) disableLights();
 
    glPushMatrix ();
-   glTranslatef(0, 0, 0);
-   objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      glTranslatef(-70.0f, 35.0f, 70.0f);
+      glScalef(20.0f, 20.0f, 20.0f);
+      objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
 
    glPushMatrix ();
-   glTranslatef(50, 0, 0);
-   objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      glTranslatef(70.0f, 35.0f, 70.0f);
+      glScalef(20.0f, 20.0f, 20.0f);
+      objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
 
    glPushMatrix ();
-   glTranslatef(0, 0, 10);
-   cono -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      glTranslatef(0.0f, -3.0f, 0.0f);
+      cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
-   // glPushMatrix ();
-   // glTranslatef(0, 0, 0);
-   // cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();
-   // glPushMatrix ();
-   // glTranslatef(0, 0, 60);
-   // cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();
-   // glPushMatrix ();
-   glTranslatef(0, 0, 20);
-   esfera -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   //Soles 
+   glPushMatrix ();
+      glTranslatef(0.0f, 90.0f, -110.0f);
+      esfera0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
-   // glPushMatrix ();
-   // glTranslatef(0, 100, 0);
-   // esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();
-   // glPushMatrix ();
-   // glTranslatef(0, 160, 60);
-   // esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();
 
-   // glPushMatrix ();
-   // glTranslatef(200, 0, 0);
-   // cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();   
+   glPushMatrix ();
+      glTranslatef(0.0f, 130.0f, 0.0f);
+      esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
-   // glPushMatrix ();
-   // glTranslatef(0, 0, 0);
-   // cilindro1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled);
-   // glPopMatrix ();   
+   glPushMatrix ();
+      glTranslatef(0.0f, 160.0f, 110.0f);
+      esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+
+   // Mountain
+    glPushMatrix ();
+      glTranslatef(0.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+
+    glPushMatrix ();
+      glTranslatef(140.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+
+    glPushMatrix ();
+      glTranslatef(-140.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+   // Estatuas
+   glPushMatrix ();
+      glTranslatef(-70.0f, 0.0f, -70.0f);
+      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(70.0f, 0.0f, -70.0f);
+      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   // Piramides
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, -110.0f);
+      cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 0.0f);
+      cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 110.0f);
+      cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
 }
 
+void Escena::disableLights(){
+  if (!gl_light0_enabled) glDisable(GL_LIGHT0);
+  if (!gl_light1_enabled) glDisable(GL_LIGHT1);
+  if (!gl_light2_enabled) glDisable(GL_LIGHT2);
+  if (!gl_light3_enabled) glDisable(GL_LIGHT3);
+  if (!gl_light4_enabled) glDisable(GL_LIGHT4);
+  if (!gl_light5_enabled) glDisable(GL_LIGHT5);
+  if (!gl_light6_enabled) glDisable(GL_LIGHT6);
+  if (!gl_light7_enabled) glDisable(GL_LIGHT7);
+}
 //**************************************************************************
 //
 // función que se invoca cuando se pulsa una tecla
@@ -207,6 +349,72 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             cout << "Primero activa modo de visualizacion (V)" << endl;
          }
          break ;
+      case 'A':
+         if(modoMenu==SELILUMINACION){
+            alpha_l = true;
+            beta_l = false;
+            cout << "Activada variación ángulo alpha" << endl;
+         }
+         break;
+      case 'B':
+         if(modoMenu==SELILUMINACION){
+            alpha_l = false;
+            beta_l = true;
+            cout << "Activada variación ángulo beta" << endl;
+         }
+         break;
+      case '>':
+         if(modoMenu==SELILUMINACION && alpha_l)
+            var_a=4;
+         if(modoMenu==SELILUMINACION && beta_l)
+            var_b=4;
+         break;
+      case '<':
+         if(modoMenu==SELILUMINACION && alpha_l)
+            var_a= -4;
+         if(modoMenu==SELILUMINACION && beta_l)
+            var_b= -4;
+         break;
+      case '0':
+         if(modoMenu==SELILUMINACION){
+            gl_light0_enabled = !gl_light0_enabled;
+         }
+         break;
+      case '1':
+         if(modoMenu==SELILUMINACION){
+            gl_light1_enabled = !gl_light1_enabled;
+         }
+         break;
+      case '2':
+         if(modoMenu==SELILUMINACION){
+            gl_light2_enabled = !gl_light2_enabled;
+         }
+         break;
+      case '3':
+         if(modoMenu==SELILUMINACION){
+            gl_light3_enabled = !gl_light3_enabled;
+         }
+         break;
+      case '4':
+         if(modoMenu==SELILUMINACION){
+            gl_light4_enabled = !gl_light4_enabled;
+         }
+         break;
+      case '5':
+         if(modoMenu==SELILUMINACION){
+            gl_light5_enabled = !gl_light5_enabled;
+         }
+         break;
+      case '6':
+         if(modoMenu==SELILUMINACION){
+            gl_light6_enabled = !gl_light6_enabled;
+         }
+         break;
+      case '7':
+         if(modoMenu==SELILUMINACION){
+            gl_light7_enabled = !gl_light7_enabled;
+         }
+         break;
       case 'Z' :
          Scale+=2;
          cout << "Scale equal to " << Scale << endl;
@@ -227,14 +435,18 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
    {
 	   case GLUT_KEY_LEFT:
          Observer_angle_y-- ;
+         Observer_angle_y-- ;
          break;
 	   case GLUT_KEY_RIGHT:
+         Observer_angle_y++ ;
          Observer_angle_y++ ;
          break;
 	   case GLUT_KEY_UP:
          Observer_angle_x-- ;
+         Observer_angle_x-- ;
          break;
 	   case GLUT_KEY_DOWN:
+         Observer_angle_x++ ;
          Observer_angle_x++ ;
          break;
 	   case GLUT_KEY_PAGE_UP:

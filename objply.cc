@@ -13,7 +13,6 @@ ObjPLY::ObjPLY( const std::string & nombre_archivo )
    // leer la lista de caras y vértices
    ply::read( nombre_archivo, this->v, this->f );
    createColours(v.size(), {0.7,0.69,0.05}, {0.0, 1.0, 0.0}, {0.0, 0.0, 0.0});
-   setMaterial(m);
 }
 
 void ObjPLY::createColours(int size, Tupla3f color_s, Tupla3f color_l, Tupla3f color_p)

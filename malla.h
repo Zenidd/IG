@@ -25,6 +25,7 @@ class Malla3D
       Material m;
       // función que dibuja el objeto en modo diferido (usando VBOs)
       void setMaterial(Material mat);
+
       void draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, bool LightsEnabled) ;
       std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
       std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo

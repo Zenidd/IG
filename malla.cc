@@ -118,7 +118,7 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram)
          q=v[f[i](X)]; p=v[f[i](Y)]; r=v[f[i](Z)];
          a=q-p;
          b=r-p;
-         normal_c = a.cross(b);
+         normal_c = b.cross(a);
          nc[i]=normal_c.normalized();
          // std::cout << "{" <<nc[i][X] << "," << nc[i][Y] << "," << nc[i][Z] << "}" << std::endl;
 
@@ -135,8 +135,5 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram)
 
 void Malla3D::setMaterial(Material mat)
 {
-   // this->m.brillo    = mat.brillo;
-   // m.ambiente        = mat.ambiente;
-   // m.difuso          = mat.difuso;
-   // m.especular       = mat.especular;
+   this->m = mat;
 }
