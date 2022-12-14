@@ -13,6 +13,8 @@
 #include "cilindro.h"
 #include "cono.h"
 #include "esfera.h"
+#include "anillo.h"
+#include "column.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION} menu;
 
@@ -61,6 +63,7 @@ class Escena
 
    Cilindro * cilindro = nullptr;
    Cilindro * cilindro1 = nullptr;
+
    Cono * cono0 = nullptr;
    Cono * cono1 = nullptr;
    Cono * cono2 = nullptr;
@@ -69,8 +72,12 @@ class Escena
    Esfera * esfera1 = nullptr;
    Esfera * esfera2 = nullptr;
 
+   Anillo * anillo = nullptr;
+
   Material *blanco_d = nullptr;
   Material *negro_e = nullptr;
+
+  Column * column = nullptr;
 
 
   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
@@ -104,6 +111,7 @@ class Escena
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );
+  void animarModeloJerarquico();
 
 };
 #endif

@@ -97,6 +97,7 @@ Escena::Escena()
 
    cilindro = new Cilindro(30, 20, 4, 1000);
 
+   column = new Column();
 
    this->esfera0->setMaterial(sun0);
    this->esfera1->setMaterial(sun1);
@@ -110,9 +111,11 @@ Escena::Escena()
    this->objrevolucion->setMaterial(blanco_d);
    this->objrevolucion1->setMaterial(negro_e);
 
+
    this->cono0->setMaterial(egypt_m);
    this->cono1->setMaterial(egypt_m);
    this->cono2->setMaterial(egypt_m);
+
 
 }
 
@@ -134,7 +137,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
    change_projection( float(UI_window_width)/float(UI_window_height) );
 	glViewport( 0, 0, UI_window_width, UI_window_height );
 
-   glEnable(GL_CULL_FACE);
+   // glEnable(GL_CULL_FACE);
    glEnable(GL_NORMALIZE); // Añadido para evitar que las normales varien con glScalef
    glShadeModel(GL_SMOOTH);
    // glShadeModel(GL_FLAT);
@@ -182,18 +185,18 @@ void Escena::dibujar()
    //Interruptores Luces
    if(LightsEnabled) disableLights();
 
-   glPushMatrix ();
-      glTranslatef(-70.0f, 35.0f, 70.0f);
-      glScalef(20.0f, 20.0f, 20.0f);
-      objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
+   // glPushMatrix ();
+   //    glTranslatef(-70.0f, 35.0f, 70.0f);
+   //    glScalef(20.0f, 20.0f, 20.0f);
+   //    objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
 
 
-   glPushMatrix ();
-      glTranslatef(70.0f, 35.0f, 70.0f);
-      glScalef(20.0f, 20.0f, 20.0f);
-      objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
+   // glPushMatrix ();
+   //    glTranslatef(70.0f, 35.0f, 70.0f);
+   //    glScalef(20.0f, 20.0f, 20.0f);
+   //    objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
 
 
    glPushMatrix ();
@@ -201,77 +204,83 @@ void Escena::dibujar()
       cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
-   //Soles 
+   // //Soles 
+   // glPushMatrix ();
+   //    glTranslatef(0.0f, 90.0f, -110.0f);
+   //    esfera0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
+
+   // glPushMatrix ();
+   //    glTranslatef(0.0f, 130.0f, 0.0f);
+   //    esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
+
+   // glPushMatrix ();
+   //    glTranslatef(0.0f, 160.0f, 110.0f);
+   //    esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
+
+   //Testing
    glPushMatrix ();
-      glTranslatef(0.0f, 90.0f, -110.0f);
-      esfera0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-   glPushMatrix ();
-      glTranslatef(0.0f, 130.0f, 0.0f);
-      esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-   glPushMatrix ();
-      glTranslatef(0.0f, 160.0f, 110.0f);
-      esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-
-   // Mountain
-    glPushMatrix ();
-      glTranslatef(0.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
-
-
-    glPushMatrix ();
-      glTranslatef(140.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
-
-
-    glPushMatrix ();
-      glTranslatef(-140.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
-
-   // Estatuas
-   glPushMatrix ();
-      glTranslatef(-70.0f, 0.0f, -70.0f);
-      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-   glPushMatrix ();
-      glTranslatef(70.0f, 0.0f, -70.0f);
-      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-   // Piramides
-   glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, -110.0f);
-      cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      std::cout << "------------------------------------------------------" << std::endl;
+      column -> draw();
    glPopMatrix ();
 
 
-   glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, 0.0f);
-      cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
+//    // Mountain
+//     glPushMatrix ();
+//       glTranslatef(0.0f, 80.0f, -300.0f);
+//       glScalef(150.0f, 150.0f, 150.0f);
+//       glRotatef(90, 0.0f, 1.0f, 0.0f);
+//       glRotatef(-90, 1.0f, 0.0f, 0.0f);
+//       mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();  
 
-   glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, 110.0f);
-      cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
+
+//     glPushMatrix ();
+//       glTranslatef(140.0f, 80.0f, -300.0f);
+//       glScalef(150.0f, 150.0f, 150.0f);
+//       glRotatef(90, 0.0f, 1.0f, 0.0f);
+//       glRotatef(-90, 1.0f, 0.0f, 0.0f);
+//       mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();  
+
+
+//     glPushMatrix ();
+//       glTranslatef(-140.0f, 80.0f, -300.0f);
+//       glScalef(150.0f, 150.0f, 150.0f);
+//       glRotatef(90, 0.0f, 1.0f, 0.0f);
+//       glRotatef(-90, 1.0f, 0.0f, 0.0f);
+//       mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();  
+
+//    // Estatuas
+//    glPushMatrix ();
+//       glTranslatef(-70.0f, 0.0f, -70.0f);
+//       objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();
+
+//    glPushMatrix ();
+//       glTranslatef(70.0f, 0.0f, -70.0f);
+//       objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();
+
+//    // Piramides
+//    glPushMatrix ();
+//       glTranslatef(0.0f, 0.0f, -110.0f);
+//       cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();
+
+
+//    glPushMatrix ();
+//       glTranslatef(0.0f, 0.0f, 0.0f);
+//       cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();
+
+//    glPushMatrix ();
+//       glTranslatef(0.0f, 0.0f, 110.0f);
+//       cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+//    glPopMatrix ();
 
 }
 
@@ -498,4 +507,11 @@ void Escena::change_observer()
    glTranslatef( 0.0, 0.0, -Observer_distance );
    glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+}
+
+
+void Escena::animarModeloJerarquico()
+{
+   column -> draw();
+
 }
