@@ -9,13 +9,13 @@ ColumnRing::ColumnRing(unsigned int initial_rotation)
 }
 
 void ColumnRing::draw(){
+   glRotatef(rotation_degrees, 0.0,1.0,0.0);
    glPushMatrix();
       glPushMatrix();
          glScalef(16,8,16);
          glTranslatef(0,-0.5,0);
          anillo -> draw(0,0,0,1);
       glPopMatrix();
-      glRotatef(rotation_degrees, 0.0,1.0,0.0);
       glPushMatrix();
          glTranslatef(32,0,0);
          columnsphere -> draw();

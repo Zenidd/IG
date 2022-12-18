@@ -6,7 +6,7 @@
 ColumnPilar::ColumnPilar(unsigned int initial_rotation)
 
 {
-   columnring_current_height = 70;
+   columnring_current_height = 20;
    columnring_max_height = 64;
    columnring_min_height = 8;
    rotation_degrees = initial_rotation;
@@ -21,9 +21,7 @@ void ColumnPilar::draw(){
          cilindro -> draw(0, 0, 0, 1);
       glPopMatrix();
       glPushMatrix();
-         glTranslatef(0, columnring_current_height , 0);
-         glRotatef(rotation_degrees, 0.0, 1.0, 0.0);
-         columnring -> draw();
+         glTranslatef(0, columnring_current_height , 0);         columnring -> draw();
       glPopMatrix();
    glPopMatrix();
 }

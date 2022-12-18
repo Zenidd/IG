@@ -15,8 +15,8 @@ void ColumnSphere::draw(){
          glScalef(8,8,8);
          esfera -> draw(0,0,0,1);
       glPopMatrix();
-      glRotatef(rotation_degrees, 1.0,0.0,0.0);
       glPushMatrix();
+         glRotatef(rotation_degrees, 1.0,0.0,0.0);
          glTranslatef(0,16,0);
          glScalef(4,4,4);
          satelite -> draw(0,0,0,1);
