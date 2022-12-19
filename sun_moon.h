@@ -7,12 +7,14 @@
 //
 // #############################################################################
 
-#ifndef COLUMN_H_INCLUDED
-#define COLUMN_H_INCLUDED
+#ifndef SUN_MOON_H_INCLUDED
+#define SUN_MOON_H_INCLUDED
 
 #include "auxiliar.h"
-#include "column_pilar.h"
 #include "esfera.h"
+#include "luz.h"
+#include "luzposicional.h"
+// #include "tuplasg.h"
 // *****************************************************************************
 //
 // clases derivadas de Malla3D (definen constructores específicos)
@@ -23,22 +25,19 @@
 // Cubo con centro en el origen y lado unidad por defecto
 // (tiene 9 vertices y 6 caras)
 
-class Column
+class SunMoon
 {
    public:
-      Column();
+      SunMoon();
       void draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, bool LightsEnabled);
-      void change_rotation(unsigned int ring_degrees, unsigned int sphere_degrees);
-      void set_rotation_sense(bool ccw_rotation);
-      void ring_movement(unsigned int units);
+      void change_rotation(float units);
    private:
-      ColumnPilar * columnpilar = nullptr;
-      Esfera * esfera = nullptr;
-      unsigned int rotation_ring     = 0;
-      unsigned int rotation_sphere   = 0;
-      unsigned int rotation_satelite = 0;
-      enum {UP, DOWN} direction;
 
+      LuzPosicional * luzposicionalsol = nullptr;
+      LuzPosicional * luzposicionalmoon = nullptr;
+      Esfera * sun = nullptr;
+      Esfera * moon = nullptr;
+      float rotation     = 0;
 } ;
 
 #endif

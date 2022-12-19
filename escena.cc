@@ -31,7 +31,7 @@ Escena::Escena()
    this->luzposicional = new LuzPosicional(posicionLuz, GL_LIGHT0, ambiental, especular, difusa);
 
 
-   Tupla2f orientacion(0.0f, 0.0f);
+   Tupla2f orientacion(0.0f, 0.0f);\
    Tupla4f d_ambiental(0.0, 0.0, 0.0, 0.0);
    Tupla4f d_difusa(1.0,1.0,1.0,1.0);
    Tupla4f d_especular(1.0,1.0,1.0,1.0);
@@ -99,6 +99,8 @@ Escena::Escena()
 
    column = new Column();
 
+   sunmoon = new SunMoon();
+
    this->esfera0->setMaterial(sun0);
    this->esfera1->setMaterial(sun1);
    this->esfera2->setMaterial(sun2);
@@ -115,6 +117,7 @@ Escena::Escena()
    this->cono0->setMaterial(egypt_m);
    this->cono1->setMaterial(egypt_m);
    this->cono2->setMaterial(egypt_m);
+
 
 
 }
@@ -166,7 +169,7 @@ void Escena::dibujar()
    else glDisable(GL_LIGHTING); 
 
 
-   // Activación luces
+   // \ivación luces
    luzposicional->activar();
    glPushMatrix();
       if(alpha_l){
@@ -182,15 +185,60 @@ void Escena::dibujar()
    glPopMatrix();
 
 
-   //Interruptores Luces
+   // Interruptores Luces
    if(LightsEnabled) disableLights();
 
+   // glPushMatrix ();
+   //    glTranslatef(-70.0f, 35.0f, 70.0f);
+   //    glScalef(20.0f, 20.0f, 20.0f);
+   //    objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
+
    glPushMatrix ();
-      glTranslatef(-70.0f, 35.0f, 70.0f);
-      glScalef(20.0f, 20.0f, 20.0f);
-      objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
+
+   // Testing
+   glPushMatrix ();
+      glTranslatef(0.0, 0.0, -50.0);
+      switch (gradoslibertad){
+         case ANILLO:
+            if (degrees_increment){
+               column -> ring_movement(number_of_degrees);
+            } 
+            else {
+               column -> ring_movement(-number_of_degrees);
+            }
+            number_of_degrees = 0;
+            break;
+         case ESFERA:
+            if (degrees_increment){
+               column -> change_rotation(0, number_of_degrees);
+               column -> set_rotation_sense(true);
+            } 
+            else {
+               column -> change_rotation(0, number_of_degrees);
+               column -> set_rotation_sense(false);
+            }
+            number_of_degrees = 0;
+            break;
+         case SATELITE:
+            if (degrees_increment){
+               column -> change_rotation(number_of_degrees, 0);
+               column -> set_rotation_sense(true);
+            } 
+            else {
+               column -> change_rotation(number_of_degrees, 0);
+               column -> set_rotation_sense(false);
+            }
+            number_of_degrees = 0;
+            break;
+         case EMPTY:
+            break;
+      }
+      column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
    // glPushMatrix ();
    //    glTranslatef(70.0f, 35.0f, 70.0f);
@@ -199,10 +247,10 @@ void Escena::dibujar()
    // glPopMatrix ();
 
 
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, -3.0f, 0.0f);
-   //    cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
+   glPushMatrix ();
+      glTranslatef(0.0f, -3.0f, 0.0f);
+      cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
    // //Soles 
    // glPushMatrix ();
@@ -220,67 +268,62 @@ void Escena::dibujar()
    //    esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    // glPopMatrix ();
 
-   //Testing
+
+
+   // Mountain
+    glPushMatrix ();
+      glTranslatef(0.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+
+    glPushMatrix ();
+      glTranslatef(140.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+
+    glPushMatrix ();
+      glTranslatef(-140.0f, 80.0f, -300.0f);
+      glScalef(150.0f, 150.0f, 150.0f);
+      glRotatef(90, 0.0f, 1.0f, 0.0f);
+      glRotatef(-90, 1.0f, 0.0f, 0.0f);
+      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();  
+
+   // Estatuas
    glPushMatrix ();
-      std::cout << "------------------------------------------------------" << std::endl;
-      column -> draw();
+      glTranslatef(-100.0f, 0.0f, -70.0f);
+      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(100.0f, 0.0f, -70.0f);
+      objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   // Piramides
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 40.0f);
+      cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
 
-   // // Mountain
-   //  glPushMatrix ();
-   //    glTranslatef(0.0f, 80.0f, -300.0f);
-   //    glScalef(150.0f, 150.0f, 150.0f);
-   //    glRotatef(90, 0.0f, 1.0f, 0.0f);
-   //    glRotatef(-90, 1.0f, 0.0f, 0.0f);
-   //    mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();  
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 150.0f);
+      cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
-
-   //  glPushMatrix ();
-   //    glTranslatef(140.0f, 80.0f, -300.0f);
-   //    glScalef(150.0f, 150.0f, 150.0f);
-   //    glRotatef(90, 0.0f, 1.0f, 0.0f);
-   //    glRotatef(-90, 1.0f, 0.0f, 0.0f);
-   //    mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();  
-
-
-   //  glPushMatrix ();
-   //    glTranslatef(-140.0f, 80.0f, -300.0f);
-   //    glScalef(150.0f, 150.0f, 150.0f);
-   //    glRotatef(90, 0.0f, 1.0f, 0.0f);
-   //    glRotatef(-90, 1.0f, 0.0f, 0.0f);
-   //    mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();  
-
-   // // Estatuas
-   // glPushMatrix ();
-   //    glTranslatef(-70.0f, 0.0f, -70.0f);
-   //    objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-   // glPushMatrix ();
-   //    glTranslatef(70.0f, 0.0f, -70.0f);
-   //    objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-   // // Piramides
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 0.0f, -110.0f);
-   //    cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 0.0f, 0.0f);
-   //    cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 0.0f, 110.0f);
-   //    cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 260.0f);
+      cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
 }
 
@@ -307,132 +350,205 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    using namespace std ;
    cout << "Tecla pulsada: '" << tecla << "'" << endl;
    bool salir=false;
-   switch( toupper(tecla) )
-   {
-      case 'Q' :
-         if (modoMenu!=NADA)
+
+
+   if ( modoMenu == MANUAL ){
+      switch( toupper(tecla) ){
+         case 'Q' :
+            modoMenu=NADA; 
+            gradoslibertad=EMPTY;           
+            break ;
+         case '0':
+            std::cout << "ROTACION SATELITE" << std::endl;
+            gradoslibertad = SATELITE;
+            break;
+         case '1':
+            std::cout << "ROTACION ESFERA" << std::endl;
+            gradoslibertad = ESFERA;
+            break;
+         case '2':
+            std::cout << "TRASLACION ANILLO" << std::endl;
+            gradoslibertad = ANILLO;
+            break;
+         case '+':
+            std::cout << "MODO MANUAL INCREMENTO" << std::endl;
+            degrees_increment = true;
+            number_of_degrees = 10;
+            break;
+         case '-':
+            std::cout << "MODO MANUAL DECREMENTO" << std::endl;
+            degrees_increment = false;
+            number_of_degrees = 10;
+            break;
+      }
+   }else if ( modoMenu == ANIMACION ){
+      switch( toupper(tecla) ){
+         case 'A' :
+            animation_enabled = !animation_enabled;  
+            break ;
+         case 'Q' :
             modoMenu=NADA;            
-         else {
-            salir=true ;
-         }
-         break ;
-      case 'V' :
-         cout << "MODO VISUALIZACION" << endl;
-         modoMenu=SELVISUALIZACION;
-         break ;     
-      case 'P' :
-         if (modoMenu==SELVISUALIZACION){
-            PointsEnabled = !PointsEnabled;
-            LightsEnabled = false;
-         }
-         else {
-            cout << "Primero activa modo de visualizacion (V)" << endl;
-         }
-         break ;
-      case 'L' :
-         if (modoMenu==SELVISUALIZACION){
-            LinesEnabled = !LinesEnabled;
-            LightsEnabled = false;
-         }
-         else {
-            cout << "Primero activa modo de visualizacion (V)" << endl;
-         }
-         break ;
-      case 'S' :
-         if (modoMenu==SELVISUALIZACION){
-            SolidEnabled = !SolidEnabled;
-            LightsEnabled = false;
-         }
-         else {
-            cout << "Primero activa modo de visualizacion (V)" << endl;
-         }
-      case 'I' :
-         if (modoMenu==SELVISUALIZACION){
-            LightsEnabled = true;
-            LinesEnabled = false;
-            PointsEnabled = false;
-            SolidEnabled = false;
-            modoMenu = SELILUMINACION;
-         }
-         else {
-            cout << "Primero activa modo de visualizacion (V)" << endl;
-         }
-         break ;
-      case 'A':
-         if(modoMenu==SELILUMINACION){
-            alpha_l = true;
-            beta_l = false;
-            cout << "Activada variación ángulo alpha" << endl;
-         }
-         break;
-      case 'B':
-         if(modoMenu==SELILUMINACION){
-            alpha_l = false;
-            beta_l = true;
-            cout << "Activada variación ángulo beta" << endl;
-         }
-         break;
-      case '>':
-         if(modoMenu==SELILUMINACION && alpha_l)
-            var_a=4;
-         if(modoMenu==SELILUMINACION && beta_l)
-            var_b=4;
-         break;
-      case '<':
-         if(modoMenu==SELILUMINACION && alpha_l)
-            var_a= -4;
-         if(modoMenu==SELILUMINACION && beta_l)
-            var_b= -4;
-         break;
-      case '0':
-         if(modoMenu==SELILUMINACION){
-            gl_light0_enabled = !gl_light0_enabled;
-         }
-         break;
-      case '1':
-         if(modoMenu==SELILUMINACION){
-            gl_light1_enabled = !gl_light1_enabled;
-         }
-         break;
-      case '2':
-         if(modoMenu==SELILUMINACION){
-            gl_light2_enabled = !gl_light2_enabled;
-         }
-         break;
-      case '3':
-         if(modoMenu==SELILUMINACION){
-            gl_light3_enabled = !gl_light3_enabled;
-         }
-         break;
-      case '4':
-         if(modoMenu==SELILUMINACION){
-            gl_light4_enabled = !gl_light4_enabled;
-         }
-         break;
-      case '5':
-         if(modoMenu==SELILUMINACION){
-            gl_light5_enabled = !gl_light5_enabled;
-         }
-         break;
-      case '6':
-         if(modoMenu==SELILUMINACION){
-            gl_light6_enabled = !gl_light6_enabled;
-         }
-         break;
-      case '7':
-         if(modoMenu==SELILUMINACION){
-            gl_light7_enabled = !gl_light7_enabled;
-         }
-         break;
-      case 'Z' :
-         Scale+=2;
-         cout << "Scale equal to " << Scale << endl;
-         break ;
-      case 'X' :
-         Scale-=2;
-         cout << "Scale equal to " << Scale << endl;
-         break ;
-      // COMPLETAR con los diferentes opciones de teclado 
+            break ;
+         case '+':
+            if(modoMenu==ANIMACION){
+               cout << "MODO ANIMACION: AUMENTO VELOCIDAD" << endl;
+            }
+            break;
+         case '-':
+            if(modoMenu==ANIMACION){
+               cout << "MODO ANIMACION: DISMINUCION VELOCIDAD" << endl;
+            }
+            break;
+      }
+   }
+   else if ( modoMenu == SELVISUALIZACION || modoMenu == SELILUMINACION ) {
+      switch( toupper(tecla) )
+      {
+         case 'Q' :
+               modoMenu=NADA;            
+            break ;
+         // case 'V' :
+         //    cout << "MODO VISUALIZACION" << endl;
+         //    modoMenu=SELVISUALIZACION;
+         //    break ;     
+         case 'P' :
+            if (modoMenu==SELVISUALIZACION){
+               PointsEnabled = !PointsEnabled;
+               LightsEnabled = false;
+            }
+            else {
+               cout << "Primero activa modo de visualizacion (V)" << endl;
+            }
+            break ;
+         case 'L' :
+            if (modoMenu==SELVISUALIZACION){
+               LinesEnabled = !LinesEnabled;
+               LightsEnabled = false;
+            }
+            else {
+               cout << "Primero activa modo de visualizacion (V)" << endl;
+            }
+            break ;
+         case 'S' :
+            if (modoMenu==SELVISUALIZACION){
+               SolidEnabled = !SolidEnabled;
+               LightsEnabled = false;
+            }
+            else {
+               cout << "Primero activa modo de visualizacion (V)" << endl;
+            }
+            break ;
+         case 'I' :
+            if (modoMenu==SELVISUALIZACION){
+               LightsEnabled = true;
+               LinesEnabled = false;
+               PointsEnabled = false;
+               SolidEnabled = false;
+               modoMenu = SELILUMINACION;
+            }
+            else {
+               cout << "Primero activa modo de visualizacion (V)" << endl;
+            }
+            break ;
+         case 'A':
+            if(modoMenu==SELILUMINACION){
+               alpha_l = true;
+               beta_l = false;
+               cout << "Activada variación ángulo alpha" << endl;
+            }
+            break;
+         case 'B':
+            if(modoMenu==SELILUMINACION){
+               alpha_l = false;
+               beta_l = true;
+               cout << "Activada variación ángulo beta" << endl;
+            }
+            break;
+         case '>':
+            if(modoMenu==SELILUMINACION && alpha_l)
+               var_a=4;
+            if(modoMenu==SELILUMINACION && beta_l)
+               var_b=4;
+            break;
+         case '<':
+            if(modoMenu==SELILUMINACION && alpha_l)
+               var_a= -4;
+            if(modoMenu==SELILUMINACION && beta_l)
+               var_b= -4;
+            break;
+         case '0':
+            if(modoMenu==SELILUMINACION){
+               gl_light0_enabled = !gl_light0_enabled;
+            }
+            break;
+         case '1':
+            if(modoMenu==SELILUMINACION){
+               gl_light1_enabled = !gl_light1_enabled;
+            }
+            break;
+         case '2':
+            if(modoMenu==SELILUMINACION){
+               gl_light2_enabled = !gl_light2_enabled;
+            }
+            break;
+         case '3':
+            if(modoMenu==SELILUMINACION){
+               gl_light3_enabled = !gl_light3_enabled;
+            }
+            break;
+         case '4':
+            if(modoMenu==SELILUMINACION){
+               gl_light4_enabled = !gl_light4_enabled;
+            }
+            break;
+         case '5':
+            if(modoMenu==SELILUMINACION){
+               gl_light5_enabled = !gl_light5_enabled;
+            }
+            break;
+         case '6':
+            if(modoMenu==SELILUMINACION){
+               gl_light6_enabled = !gl_light6_enabled;
+            }
+            break;
+         case '7':
+            if(modoMenu==SELILUMINACION){
+               gl_light7_enabled = !gl_light7_enabled;
+            }
+            break;
+         case 'Z' :
+            Scale+=2;
+            cout << "Scale equal to " << Scale << endl;
+            break ;
+         case 'X' :
+            Scale-=2;
+            cout << "Scale equal to " << Scale << endl;
+            break ;
+         // COMPLETAR con los diferentes opciones de teclado 
+      }
+   }
+   else if (modoMenu == NADA){
+      switch( toupper(tecla) )
+      {
+         case 'Q' :
+            salir=true ;   
+            break ;
+         case 'V' :
+            modoMenu=SELVISUALIZACION;
+            break ;
+         case 'A' :
+            cout << "MODO ANIMACION" << endl;
+            modoMenu=ANIMACION;
+            animation_enabled = !animation_enabled;
+            break ; 
+         case 'M' :
+            cout << "MODO MANUAL" << endl;
+            modoMenu=MANUAL;
+            animation_enabled = false;
+            break ; 
+         default:
+            break;
+      }
    }
    return salir;
 }
@@ -512,6 +628,11 @@ void Escena::change_observer()
 
 void Escena::animarModeloJerarquico()
 {
-   column -> draw();
-
+   if(animation_enabled){
+      sunmoon -> change_rotation(0.6);
+      sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      column -> ring_movement(5);
+      column -> change_rotation(5,5);
+      column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   }
 }

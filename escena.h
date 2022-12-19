@@ -15,9 +15,10 @@
 #include "esfera.h"
 #include "anillo.h"
 #include "column.h"
+#include "sun_moon.h"
 
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION} menu;
-
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL} menu;
+typedef enum {SATELITE, ESFERA, ANILLO, EMPTY} gradosLibertad;
 class Escena
 {
 
@@ -43,7 +44,8 @@ class Escena
 
    void clear_window();
 
-   menu modoMenu=NADA;
+   menu modoMenu = NADA;
+   gradosLibertad gradoslibertad = EMPTY;
    // Luces de le escena
    LuzDireccional * luzdireccional = nullptr;
    LuzPosicional * luzposicional = nullptr;
@@ -78,7 +80,7 @@ class Escena
   Material *negro_e = nullptr;
 
   Column * column = nullptr;
-
+  SunMoon * sunmoon = nullptr;
 
   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
   bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;
@@ -98,8 +100,10 @@ class Escena
   
   float var_a = 0.0f, var_b=0.0f;
 
-
-
+  bool animation_enabled = false;
+  bool degrees_increment = true;
+  unsigned int number_of_degrees = 1;
+  float sun_moon_number_of_degrees = 0.1;
    public:
     Escena();
 	void inicializar( int UI_window_width, int UI_window_height );

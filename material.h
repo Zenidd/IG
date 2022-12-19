@@ -22,14 +22,14 @@
 
 class Material {
    private:
-      const Tupla4f amb_dif_defecto = {1.0, 0.5, 0.8, 1.0};
-      const Tupla4f esp_defecto = {1.0,0.3,0.3,1.0};
-      const Tupla4f dif_defecto = {1.0,0.0,0.0,1.0};
-      const float brillo_defecto = 20.0f;
-      // const Tupla4f amb_dif_defecto = {0.1, 0.5, 0.8, 1.0};
-      // const Tupla4f esp_defecto = {0.3,0.3,0.3,1.0};
-      // const Tupla4f dif_defecto = {0.0,0.0,0.0,1.0};
+      // const Tupla4f amb_dif_defecto = {1.0, 0.5, 0.8, 1.0};
+      // const Tupla4f esp_defecto = {1.0,0.3,0.3,1.0};
+      // const Tupla4f dif_defecto = {1.0,0.0,0.0,1.0};
       // const float brillo_defecto = 20.0f;
+      const Tupla4f amb_dif_defecto = {0.1, 0.5, 0.8, 1.0};
+      const Tupla4f esp_defecto = {0.3,0.3,0.3,1.0};
+      const Tupla4f dif_defecto = {0.0,0.0,0.0,1.0};
+      const float brillo_defecto = 20.0f;
       Tupla4f ambiente;
       Tupla4f difuso;
       Tupla4f especular;

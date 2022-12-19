@@ -85,6 +85,9 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glDisableClientState( GL_NORMAL_ARRAY );
    } 
 
+   else
+
+
    // desactivar buffer: VBO de triángulos
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , 0 );
    // desactivar uso de array de vértices y colores
