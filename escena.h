@@ -58,6 +58,8 @@ class Escena
 
    ObjPLY * objetoply= nullptr ;
    ObjPLY * mountainPLY= nullptr ;
+   ObjPLY * desertPLY = nullptr ;
+
 
    ObjRevolucion * objrevolucion = nullptr;
    ObjRevolucion * objrevolucion1 = nullptr;
@@ -103,7 +105,12 @@ class Escena
   bool animation_enabled = false;
   bool degrees_increment = true;
   unsigned int number_of_degrees = 1;
+  unsigned int animation_speed = 5;
   float sun_moon_number_of_degrees = 0.1;
+
+
+
+
    public:
     Escena();
 	void inicializar( int UI_window_width, int UI_window_height );

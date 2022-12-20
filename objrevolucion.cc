@@ -33,6 +33,19 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instanc
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias) {
+   int M = perfil_original.size();
+   int N = num_instancias;
+
+   // si el perfil esta al reves, lo ordenamos ascendentemente
+   if(perfil_original.front()(Y) > perfil_original.back()(Y)){
+      std::vector<Tupla3f> aux;
+      for(int i=0; i<M; i++){
+         aux.push_back(perfil_original.back());
+         perfil_original.pop_back();
+      }
+      perfil_original = aux;
+      std::cout << "perfil ordenado ascendentemente...\n";
+   }
    //Orden descendente 
    //polo_sur
    if (perfil_original.front()[X] == 0.0f && perfil_original.front()[Z] == 0.0f ) {
@@ -46,8 +59,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
       perfil_original.pop_back();
       polo_n = true;
    }
-   int M = perfil_original.size();
-   int N = num_instancias;
+
    // Vector de vertices
    float angle = 0;
    for(unsigned int i = 0; i < N; i++) //N

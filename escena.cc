@@ -1,5 +1,7 @@
 
 #include "auxiliar.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include <unistd.h>
+
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
 #include "luz.h"
@@ -31,7 +33,7 @@ Escena::Escena()
    this->luzposicional = new LuzPosicional(posicionLuz, GL_LIGHT0, ambiental, especular, difusa);
 
 
-   Tupla2f orientacion(0.0f, 0.0f);\
+   Tupla2f orientacion(0.0f, 0.0f);
    Tupla4f d_ambiental(0.0, 0.0, 0.0, 0.0);
    Tupla4f d_difusa(1.0,1.0,1.0,1.0);
    Tupla4f d_especular(1.0,1.0,1.0,1.0);
@@ -86,6 +88,7 @@ Escena::Escena()
    
    objetoply = new ObjPLY("./plys/untitled.ply");
    mountainPLY = new ObjPLY("./plys/mountain.ply");
+   // desertPLY = new ObjPLY("./plys/desert.ply");
 
    cono0 = new Cono(10, 4, 40, 40);
    cono1 = new Cono(10, 4, 50, 50);
@@ -103,12 +106,15 @@ Escena::Escena()
 
    this->esfera0->setMaterial(sun0);
    this->esfera1->setMaterial(sun1);
-   this->esfera2->setMaterial(sun2);
+   this->esfera2->setMaterial(negro_e);
 
    this->cilindro->setMaterial(floor);
 
    this->objetoply->setMaterial(egypt_m);
    this->mountainPLY->setMaterial(egypt_m);
+
+   // this->desertPLY->setMaterial(egypt_m);
+   
 
    this->objrevolucion->setMaterial(blanco_d);
    this->objrevolucion1->setMaterial(negro_e);
@@ -170,17 +176,17 @@ void Escena::dibujar()
 
 
    // \ivación luces
-   luzposicional->activar();
+   // luzposicional->activar();
    glPushMatrix();
-      if(alpha_l){
-         luzdireccional->variarAnguloAlpha(var_a);
-         var_a = 0;
-      }
-      if(beta_l){
-         luzdireccional->variarAnguloBeta(var_b);
-         var_b = 0;
-      } 
-      luzdireccional->cambiarAngulo();
+      // if(alpha_l){
+      //    luzdireccional->variarAnguloAlpha(var_a);
+      //    var_a = 0;
+      // }
+      // if(beta_l){
+      //    luzdireccional->variarAnguloBeta(var_b);
+      //    var_b = 0;
+      // } 
+      // luzdireccional->cambiarAngulo();
       luzdireccional->activar();
    glPopMatrix();
 
@@ -194,9 +200,9 @@ void Escena::dibujar()
    //    objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    // glPopMatrix ();
 
-   glPushMatrix ();
-      sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
+   // glPushMatrix ();
+   //    sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
 
 
    // Testing
@@ -263,10 +269,10 @@ void Escena::dibujar()
    //    esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    // glPopMatrix ();
 
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 160.0f, 110.0f);
-   //    esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
+   glPushMatrix ();
+      glTranslatef(0.0f, 160.0f, 110.0f);
+      esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
 
 
@@ -296,6 +302,14 @@ void Escena::dibujar()
       glRotatef(-90, 1.0f, 0.0f, 0.0f);
       mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();  
+
+   //    glPushMatrix ();
+   //    // glTranslatef(-140.0f, 80.0f, -300.0f);
+   //    // glScalef(150.0f, 150.0f, 150.0f);
+   //    // glRotatef(90, 0.0f, 1.0f, 0.0f);
+   //    // glRotatef(-90, 1.0f, 0.0f, 0.0f);
+   //    desertPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   // glPopMatrix ();
 
    // Estatuas
    glPushMatrix ();
@@ -391,12 +405,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break ;
          case '+':
             if(modoMenu==ANIMACION){
-               cout << "MODO ANIMACION: AUMENTO VELOCIDAD" << endl;
+               cout << "MODO ANIMACION: AUMENTO VELOCIDAD " << animation_speed << endl;
+               if (animation_speed <50 ) animation_speed+= 1;
             }
             break;
          case '-':
             if(modoMenu==ANIMACION){
-               cout << "MODO ANIMACION: DISMINUCION VELOCIDAD" << endl;
+               cout << "MODO ANIMACION: DISMINUCION VELOCIDAD " << animation_speed <<endl;
+               if (animation_speed >0 ) animation_speed-= 1;
             }
             break;
       }
@@ -406,11 +422,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       {
          case 'Q' :
                modoMenu=NADA;            
-            break ;
-         // case 'V' :
-         //    cout << "MODO VISUALIZACION" << endl;
-         //    modoMenu=SELVISUALIZACION;
-         //    break ;     
+            break ;     
          case 'P' :
             if (modoMenu==SELVISUALIZACION){
                PointsEnabled = !PointsEnabled;
@@ -466,15 +478,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break;
          case '>':
             if(modoMenu==SELILUMINACION && alpha_l)
-               var_a=4;
+               luzdireccional -> aumentarAnguloAlpha(1);
             if(modoMenu==SELILUMINACION && beta_l)
-               var_b=4;
+               luzdireccional -> aumentarAnguloBeta(1);
             break;
          case '<':
             if(modoMenu==SELILUMINACION && alpha_l)
-               var_a= -4;
+               luzdireccional -> disminuirAnguloBeta(1);
             if(modoMenu==SELILUMINACION && beta_l)
-               var_b= -4;
+               luzdireccional -> disminuirAnguloBeta(1);
             break;
          case '0':
             if(modoMenu==SELILUMINACION){
@@ -631,8 +643,8 @@ void Escena::animarModeloJerarquico()
    if(animation_enabled){
       sunmoon -> change_rotation(0.6);
       sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-      column -> ring_movement(5);
-      column -> change_rotation(5,5);
+      column -> ring_movement(animation_speed);
+      column -> change_rotation(animation_speed,animation_speed);
       column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    }
 }

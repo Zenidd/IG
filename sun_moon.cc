@@ -45,7 +45,8 @@ SunMoon::SunMoon()
 
 void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, bool LightsEnabled){
    glPushMatrix();
-      glRotatef(rotation, 0, 0, 1);
+      glRotatef(rotation, 1, 0, 0);
+      // glRotatef(45, 0, 1, 0);
       luzposicionalsol -> activar();
       luzposicionalmoon -> activar();
       glTranslatef(0,0,-400);
