@@ -119,8 +119,8 @@ int main( int argc, char **argv )
    // variables que determninan la posicion y tamaño de la ventana X
    const int UI_window_pos_x  = 50,
              UI_window_pos_y  = 50,
-             UI_window_width  = 500,
-             UI_window_height = 500;
+             UI_window_width  = 700,
+             UI_window_height = 700;
 
    // posicion de la esquina inferior izquierdad de la ventana
    glutInitWindowPosition(UI_window_pos_x,UI_window_pos_y);

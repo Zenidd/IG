@@ -15,9 +15,10 @@ SunMoon::SunMoon()
    m_especular = {0.940, 0.0564, 0.0564, 1.0};
    Material sun_m(m_ambiental, m_especular, m_difusa, 50.0);
 
-   m_ambiental = {0.0, 0.0, 0.0, 0.1};
-   m_difusa = {1.00, 0.785, 0.0800, 0.5};
-   m_especular = {1.00, 0.785, 0.0800, 1.0};
+
+   m_ambiental = {1.0, 1.0, 1.0, 1.0};
+   m_difusa = {1.0, 1.0, 1.0, 1.0};
+   m_especular = {0.0, 0.0, 0.0, 0.0};
    Material moon_m(m_ambiental, m_especular, m_difusa, 50.0);
 
 
@@ -37,7 +38,8 @@ SunMoon::SunMoon()
    this->sun->setMaterial(sun_m);
    this->moon->setMaterial(moon_m);
    this->luzposicionalsol = new LuzPosicional(posicionLuz, GL_LIGHT3, ambiental, especular, difusa);
-   this->luzposicionalmoon = new LuzPosicional(posicionLuz_moon, GL_LIGHT4, ambiental_moon, especular_moon, difusa_moon);
+   this->luzposicionalmoon = new LuzPosicional(posicionLuz_moon, GL_LIGHT4
+   , ambiental_moon, especular_moon, difusa_moon);
 
 }
 
@@ -48,15 +50,15 @@ void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glRotatef(rotation, 0, 0, 1);
       luzposicionalsol -> activar();
       luzposicionalmoon -> activar();
-      glTranslatef(0,0,-400);
+      glTranslatef(0,0,-1000);
       glPushMatrix();
-         glTranslatef(0,300,0);
-         glScalef(5,5,5);
+         glTranslatef(0,500,0);
+         glScalef(8,8,8);
          sun -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
       glPopMatrix();
       glPushMatrix();
-         glTranslatef(0,-300,0);
-         glScalef(5,5,5);
+         glTranslatef(0,-500,0);
+         glScalef(8,8,8);
          moon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);   
       glPopMatrix();
    glPopMatrix();

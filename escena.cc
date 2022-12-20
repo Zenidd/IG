@@ -1,5 +1,7 @@
 
 #include "auxiliar.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include <unistd.h>
+
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
 #include "luz.h"
@@ -12,8 +14,8 @@ Escena::Escena()
 {
 
    Front_plane       = 50.0;
-   Back_plane        = 2000.0;
-   Observer_distance = 6*Front_plane;
+   Back_plane        = 3000.0;
+   Observer_distance = 8*Front_plane;
    Observer_angle_x  = 0.0 ;
    Observer_angle_y  = 0.0 ;
    Scale             = 1.0 ; 
@@ -31,7 +33,7 @@ Escena::Escena()
    this->luzposicional = new LuzPosicional(posicionLuz, GL_LIGHT0, ambiental, especular, difusa);
 
 
-   Tupla2f orientacion(0.0f, 0.0f);\
+   Tupla2f orientacion(0.0f, 0.0f);
    Tupla4f d_ambiental(0.0, 0.0, 0.0, 0.0);
    Tupla4f d_difusa(1.0,1.0,1.0,1.0);
    Tupla4f d_especular(1.0,1.0,1.0,1.0);
@@ -81,15 +83,16 @@ Escena::Escena()
 
 
    // OBJETOS
-   objrevolucion = new ObjRevolucion("./plys/peon.ply", 80);
-   objrevolucion1 = new ObjRevolucion("./plys/peon.ply", 80);
+   objrevolucion = new ObjRevolucion("./plys/peon_inverso.ply", 80);
+   objrevolucion1 = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    
    objetoply = new ObjPLY("./plys/untitled.ply");
    mountainPLY = new ObjPLY("./plys/mountain.ply");
+   desertPLY = new ObjPLY("./plys/desertfinal.ply");
 
-   cono0 = new Cono(10, 4, 40, 40);
-   cono1 = new Cono(10, 4, 50, 50);
-   cono2 = new Cono(10, 4, 60, 60);
+   cono0 = new Cono(10, 4, 1, 1);
+   cono1 = new Cono(10, 4, 1, 1);
+   cono2 = new Cono(10, 4, 1, 1);
 
    esfera0 = new Esfera(30, 50, 20);
    esfera1 = new Esfera(30, 50, 20);
@@ -97,27 +100,33 @@ Escena::Escena()
 
    cilindro = new Cilindro(30, 20, 4, 1000);
 
+   cubo     = new Cubo(1);
+
    column = new Column();
 
    sunmoon = new SunMoon();
 
    this->esfera0->setMaterial(sun0);
    this->esfera1->setMaterial(sun1);
-   this->esfera2->setMaterial(sun2);
+   this->esfera2->setMaterial(negro_e);
 
    this->cilindro->setMaterial(floor);
 
-   this->objetoply->setMaterial(egypt_m);
+   this->objetoply->setMaterial(floor);
    this->mountainPLY->setMaterial(egypt_m);
+
+   this->desertPLY->setMaterial(floor);
+   
 
    this->objrevolucion->setMaterial(blanco_d);
    this->objrevolucion1->setMaterial(negro_e);
 
 
-   this->cono0->setMaterial(egypt_m);
-   this->cono1->setMaterial(egypt_m);
-   this->cono2->setMaterial(egypt_m);
+   this->cono0->setMaterial(negro_e);
+   this->cono1->setMaterial(negro_e);
+   this->cono2->setMaterial(negro_e);
 
+   this->cubo->setMaterial(negro_e);
 
 
 }
@@ -130,7 +139,8 @@ Escena::Escena()
 
 void Escena::inicializar( int UI_window_width, int UI_window_height )
 {
-	glClearColor( 0.591, 0.767, 0.910, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+	glClearColor(0.139, 0.193, 0.340, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+   // glClearColor( 0.591, 0.767, 0.910, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 	// glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
 	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
@@ -165,38 +175,18 @@ void Escena::dibujar()
       if (LightsEnabled) glEnable(GL_LIGHTING);
    glPopMatrix();
    glScalef(Scale,Scale,Scale);
-   if (LightsEnabled) glEnable(GL_LIGHTING); 
-   else glDisable(GL_LIGHTING); 
 
-
-   // \ivación luces
-   luzposicional->activar();
+   // Luces
    glPushMatrix();
-      if(alpha_l){
-         luzdireccional->variarAnguloAlpha(var_a);
-         var_a = 0;
-      }
-      if(beta_l){
-         luzdireccional->variarAnguloBeta(var_b);
-         var_b = 0;
-      } 
-      luzdireccional->cambiarAngulo();
       luzdireccional->activar();
    glPopMatrix();
-
-
-   // Interruptores Luces
-   if(LightsEnabled) disableLights();
-
-   // glPushMatrix ();
-   //    glTranslatef(-70.0f, 35.0f, 70.0f);
-   //    glScalef(20.0f, 20.0f, 20.0f);
-   //    objrevolucion -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
 
    glPushMatrix ();
       sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
+
+   // Interruptores Luces
+   if(LightsEnabled) disableLights();
 
 
    // Testing
@@ -237,65 +227,25 @@ void Escena::dibujar()
          case EMPTY:
             break;
       }
+      glTranslatef(0,100,0);
+      glScalef(2,2,2);
+      glRotatef(90, 1,0,0);
       column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
-
-   // glPushMatrix ();
-   //    glTranslatef(70.0f, 35.0f, 70.0f);
-   //    glScalef(20.0f, 20.0f, 20.0f);
-   //    objrevolucion1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-
-   glPushMatrix ();
-      glTranslatef(0.0f, -3.0f, 0.0f);
-      cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();
-
-   // //Soles 
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 90.0f, -110.0f);
-   //    esfera0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
-
-   // glPushMatrix ();
-   //    glTranslatef(0.0f, 130.0f, 0.0f);
-   //    esfera1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   // glPopMatrix ();
 
    // glPushMatrix ();
    //    glTranslatef(0.0f, 160.0f, 110.0f);
    //    esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    // glPopMatrix ();
 
+   // Landscape
 
-
-   // Mountain
-    glPushMatrix ();
-      glTranslatef(0.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
-
-
-    glPushMatrix ();
-      glTranslatef(140.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
-
-
-    glPushMatrix ();
-      glTranslatef(-140.0f, 80.0f, -300.0f);
-      glScalef(150.0f, 150.0f, 150.0f);
-      glRotatef(90, 0.0f, 1.0f, 0.0f);
-      glRotatef(-90, 1.0f, 0.0f, 0.0f);
-      mountainPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-   glPopMatrix ();  
+   glPushMatrix ();
+      glRotatef(0, 0.0f, 1.0f, 0.0f);
+      glTranslatef(1000.0f, -50.0f, -1000.0f);
+      glScalef(0.8, 1, 0.8);
+      desertPLY -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
 
    // Estatuas
    glPushMatrix ();
@@ -308,20 +258,55 @@ void Escena::dibujar()
       objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
-   // Piramides
+   //Atrio
    glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, 40.0f);
-      cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+      glTranslatef(-32.0f, 0.0f, -64.0f);
+      glRotatef(90, 0, 1, 0);
+      glScalef(32, 128, 2);
+      cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+      glTranslatef(32.0f, 0.0f, -64.0f);
+      glRotatef(90, 0, 1, 0);
+      glScalef(32, 128, 2);
+      cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, -64.0f);
+      glScalef(32, 128, 2);
+      cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   // Lineas
+   glPushMatrix ();
+      glTranslatef(-100.0f, 0.0f, 70.0f);
+      glScalef(16, 2, 256);
+      cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(100.0f, 0.0f, 70.0f);
+      glScalef(16, 2, 256);
+      cubo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
 
+   // Piramides
    glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, 150.0f);
+      glTranslatef(0.0f, 0.0f, 64.0f);
+      glScalef(16, 16, 16);
+      cono0 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(0.0f, 0.0f, 144.0f);
+      glScalef(32, 32, 32);
       cono1 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
    glPushMatrix ();
-      glTranslatef(0.0f, 0.0f, 260.0f);
+      glTranslatef(0.0f, 0.0f, 256.0f);
+      glScalef(64, 64, 64);
       cono2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
@@ -329,9 +314,15 @@ void Escena::dibujar()
 
 void Escena::disableLights(){
   if (!gl_light0_enabled) glDisable(GL_LIGHT0);
-  if (!gl_light1_enabled) glDisable(GL_LIGHT1);
+  if (!gl_light1_enabled){
+      std::cout << "gl_light1_enabled is " << gl_light1_enabled << std::endl;
+   glDisable(GL_LIGHT1);
+  } 
   if (!gl_light2_enabled) glDisable(GL_LIGHT2);
-  if (!gl_light3_enabled) glDisable(GL_LIGHT3);
+  if (!gl_light3_enabled){
+   std::cout << "gl_light3_enabled is " << gl_light3_enabled << std::endl;
+   glDisable(GL_LIGHT3);
+  } 
   if (!gl_light4_enabled) glDisable(GL_LIGHT4);
   if (!gl_light5_enabled) glDisable(GL_LIGHT5);
   if (!gl_light6_enabled) glDisable(GL_LIGHT6);
@@ -391,12 +382,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break ;
          case '+':
             if(modoMenu==ANIMACION){
-               cout << "MODO ANIMACION: AUMENTO VELOCIDAD" << endl;
+               cout << "MODO ANIMACION: AUMENTO VELOCIDAD " << animation_speed << endl;
+               if (animation_speed <50 ) animation_speed+= 1;
             }
             break;
          case '-':
             if(modoMenu==ANIMACION){
-               cout << "MODO ANIMACION: DISMINUCION VELOCIDAD" << endl;
+               cout << "MODO ANIMACION: DISMINUCION VELOCIDAD " << animation_speed <<endl;
+               if (animation_speed >0 ) animation_speed-= 1;
             }
             break;
       }
@@ -406,11 +399,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       {
          case 'Q' :
                modoMenu=NADA;            
-            break ;
-         // case 'V' :
-         //    cout << "MODO VISUALIZACION" << endl;
-         //    modoMenu=SELVISUALIZACION;
-         //    break ;     
+            break ;     
          case 'P' :
             if (modoMenu==SELVISUALIZACION){
                PointsEnabled = !PointsEnabled;
@@ -466,15 +455,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break;
          case '>':
             if(modoMenu==SELILUMINACION && alpha_l)
-               var_a=4;
+               luzdireccional -> aumentarAnguloAlpha(1);
             if(modoMenu==SELILUMINACION && beta_l)
-               var_b=4;
+               luzdireccional -> aumentarAnguloBeta(1);
             break;
          case '<':
             if(modoMenu==SELILUMINACION && alpha_l)
-               var_a= -4;
+               luzdireccional -> disminuirAnguloBeta(1);
             if(modoMenu==SELILUMINACION && beta_l)
-               var_b= -4;
+               luzdireccional -> disminuirAnguloBeta(1);
             break;
          case '0':
             if(modoMenu==SELILUMINACION){
@@ -631,8 +620,8 @@ void Escena::animarModeloJerarquico()
    if(animation_enabled){
       sunmoon -> change_rotation(0.6);
       sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
-      column -> ring_movement(5);
-      column -> change_rotation(5,5);
+      column -> ring_movement(animation_speed);
+      column -> change_rotation(animation_speed,animation_speed);
       column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    }
 }
