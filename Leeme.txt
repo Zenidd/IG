@@ -44,3 +44,10 @@ Habrá tres cámaras, una en la posición de los personajes que observan los tre
 
 Cada uno de los soles será una luz posicional y una direccional apuntará a los personajes que serán PLYs.
 
+--------------------
+Comentarios corrección P3:
+fabs(a - b) < epsilon (La busqueda de polos debe implementarse con fabs) - To fix (P2)
+Los PLYs solo se interpretan en un sentido - Fixed (P2)
+Luz direccional es modificada usando glRotatef en lugar de calcular nuevo alpha y beta - Fixed (P3)
+
+--------------------

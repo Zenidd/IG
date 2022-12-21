@@ -28,7 +28,7 @@ void ColumnSphere::change_rotation(int degrees){
    if (ccw_rotation) rotation_degrees += degrees;
    else rotation_degrees -= degrees;
    rotation_degrees %= 360;
-   std::cout << "Rotation degrees are: " << rotation_degrees << std::endl;
+   // std::cout << "Rotation degrees are: " << rotation_degrees << std::endl;
 }
 
 void ColumnSphere::set_rotation_sense(bool ccw_rotation_sense){

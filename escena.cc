@@ -229,7 +229,7 @@ void Escena::dibujar()
       }
       glTranslatef(0,100,0);
       glScalef(2,2,2);
-      glRotatef(90, 1,0,0);
+      // glRotatef(180, 1,0,0);
       column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 

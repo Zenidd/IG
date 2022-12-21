@@ -38,28 +38,28 @@ void LuzDireccional::aumentarAnguloAlpha(float incremento)
 {
     alpha+= 0.0174533;
     calcular_posicion();
-    std::cout << "Alpha ahora vale " << alpha << std::endl;
+    // std::cout << "Alpha ahora vale " << alpha << std::endl;
 }
 
 void LuzDireccional::aumentarAnguloBeta(float incremento)
 {
     beta+= 0.0174533;
     calcular_posicion();
-    std::cout << "beta ahora vale " << beta << std::endl;
+    // std::cout << "beta ahora vale " << beta << std::endl;
 }
 
 void LuzDireccional::disminuirAnguloAlpha(float incremento)
 {
     alpha-= 0.0174533;
     calcular_posicion();
-    std::cout << "Alpha ahora vale " << alpha << std::endl;
+    // std::cout << "Alpha ahora vale " << alpha << std::endl;
 }
 
 void LuzDireccional::disminuirAnguloBeta(float incremento)
 {
     beta-= 0.0174533;
     calcular_posicion();
-    std::cout << "beta ahora vale " << beta << std::endl;
+    // std::cout << "beta ahora vale " << beta << std::endl;
 }
 
 void LuzDireccional::cambiarAngulo ()
