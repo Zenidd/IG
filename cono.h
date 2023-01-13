@@ -26,7 +26,8 @@ class Cono : public ObjRevolucion {
    public:
       Cono( const int num_vert_perfil ,
       const int num_instancias_perf ,
-      const float altura , const float radio );
+      const float altura , const float radio,
+      std::string texture_name = "none"  );
       void cono_vertex(int num_vert_perfil, float radio, float altura );
 };
 

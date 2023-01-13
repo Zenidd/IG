@@ -25,18 +25,18 @@ Escena::Escena()
    ejes.changeAxisSize( 5000 );
 
    // LUCES
-   Tupla3f posicionLuz = Tupla3f(0.0f, 90.0f, -110.0f);
+   Tupla3f posicionLuz = Tupla3f(0.0f, -200.0f, 600.0f);
    Tupla4f ambiental(0.0, 0.0, 0.0, 0.0);
-   Tupla4f difusa(0.84,0,0.9,1.0);
-   Tupla4f especular(0.84,0,0.9,1.0);
+   Tupla4f difusa(1.0,1.0,1.0,1.0);
+   Tupla4f especular(1.0,1.0,1.0,1.0);
 
    this->luzposicional = new LuzPosicional(posicionLuz, GL_LIGHT0, ambiental, especular, difusa);
 
 
    Tupla2f orientacion(0.0f, 0.0f);
    Tupla4f d_ambiental(0.0, 0.0, 0.0, 0.0);
-   Tupla4f d_difusa(1.0,1.0,1.0,1.0);
-   Tupla4f d_especular(1.0,1.0,1.0,1.0);
+   Tupla4f d_difusa(0.0, 0.0, 1.0, 1.0);
+   Tupla4f d_especular(0.0, 0.0, 1.0, 0.5);
 
    this->luzdireccional = new LuzDireccional(orientacion, GL_LIGHT1, d_ambiental, d_especular, d_difusa);
 
@@ -87,21 +87,19 @@ Escena::Escena()
    objrevolucion1 = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    
    objetoply = new ObjPLY("./plys/untitled.ply");
-   mountainPLY = new ObjPLY("./plys/mountain.ply");
+   // mountainPLY = new ObjPLY("./plys/mountain.ply");
    desertPLY = new ObjPLY("./plys/desertfinal.ply");
 
-   cono0 = new Cono(10, 4, 1, 1);
-   cono1 = new Cono(10, 4, 1, 1);
-   cono2 = new Cono(10, 4, 1, 1);
+   cono0 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
+   cono1 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
+   cono2 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
 
    esfera0 = new Esfera(30, 50, 20);
    esfera1 = new Esfera(30, 50, 20);
    esfera2 = new Esfera(30, 50, 20);
 
 
-   bola_mundo = new Esfera(30, 50, 20);
-
-   cilindro = new Cilindro(30, 20, 4, 1000);
+   bola_mundo = new Esfera(30, 50, 20, "world_texture.jpeg");
 
    cubo     = new Cubo(1);
 
@@ -117,14 +115,12 @@ Escena::Escena()
    this->esfera1->setMaterial(sun1);
    this->esfera2->setMaterial(negro_e);
 
-
-
+   // Texturas
+   this->cuadro->setMaterial(blanco_d);
    this->bola_mundo->setMaterial(blanco_d);
 
-   this->cilindro->setMaterial(floor);
-
    this->objetoply->setMaterial(floor);
-   this->mountainPLY->setMaterial(egypt_m);
+   // this->mountainPLY->setMaterial(egypt_m);
 
    this->desertPLY->setMaterial(floor);
    
@@ -132,10 +128,10 @@ Escena::Escena()
    this->objrevolucion->setMaterial(blanco_d);
    this->objrevolucion1->setMaterial(negro_e);
 
-
-   this->cono0->setMaterial(negro_e);
-   this->cono1->setMaterial(negro_e);
-   this->cono2->setMaterial(negro_e);
+   // Piramides
+   this->cono0->setMaterial(blanco_d);
+   this->cono1->setMaterial(blanco_d);
+   this->cono2->setMaterial(blanco_d);
 
    this->cubo->setMaterial(negro_e);
 
@@ -191,6 +187,10 @@ void Escena::dibujar()
    glPushMatrix();
       luzdireccional->activar();
    glPopMatrix();
+   glPushMatrix();
+      luzposicional->activar();
+   glPopMatrix();
+
 
    glPushMatrix ();
       sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
@@ -251,14 +251,13 @@ void Escena::dibujar()
 
    // Cuadro
    glPushMatrix ();
-      glTranslatef(0, 100, 200);
+      glTranslatef(0, -100, 200);
       cuadro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
    glPushMatrix ();
-      glTranslatef(0, 200, 200);
+      glTranslatef(0, -200, 200);
       glScalef(3,3,3);
-      glRotatef(270,0,1,0);
       bola_mundo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
@@ -340,15 +339,9 @@ void Escena::dibujar()
 
 void Escena::disableLights(){
   if (!gl_light0_enabled) glDisable(GL_LIGHT0);
-  if (!gl_light1_enabled){
-      std::cout << "gl_light1_enabled is " << gl_light1_enabled << std::endl;
-   glDisable(GL_LIGHT1);
-  } 
+  if (!gl_light1_enabled) glDisable(GL_LIGHT1);
   if (!gl_light2_enabled) glDisable(GL_LIGHT2);
-  if (!gl_light3_enabled){
-   std::cout << "gl_light3_enabled is " << gl_light3_enabled << std::endl;
-   glDisable(GL_LIGHT3);
-  } 
+  if (!gl_light3_enabled) glDisable(GL_LIGHT3);
   if (!gl_light4_enabled) glDisable(GL_LIGHT4);
   if (!gl_light5_enabled) glDisable(GL_LIGHT5);
   if (!gl_light6_enabled) glDisable(GL_LIGHT6);
@@ -644,6 +637,7 @@ void Escena::change_observer()
 void Escena::animarModeloJerarquico()
 {
    if(animation_enabled){
+      luzdireccional-> cambiar_color();
       sunmoon -> change_rotation(0.6);
       sunmoon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
       column -> ring_movement(animation_speed);

@@ -24,7 +24,7 @@
 
 class Esfera : public ObjRevolucion {
    public:
-      Esfera( const int num_vert_perfil, const int num_instancias_perf, const float radio );
+      Esfera( const int num_vert_perfil, const int num_instancias_perf, const float radio, std::string texture_name = "none" );
       void esfera_vertex(int num_vert_perfil, float radio);
 };
 

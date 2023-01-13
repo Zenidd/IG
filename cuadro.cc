@@ -16,8 +16,7 @@ Cuadro::Cuadro(float lado)
    createVertex(lado);
    createTriangles();
    createColours();
-
-   textura = new Textura("./text-lata-1.jpg");
+   textura = new Textura("./piramides.jpeg");
    createTexCoordinates();
 }
 
@@ -25,10 +24,10 @@ void Cuadro::createVertex(float lado)
 {
    v.resize(4);
    //Centrado en el origen
-   v[0] = {-lado/2, 0, 0};
-   v[1] = {lado/2, 0, 0};
-   v[2] = {lado/2, lado, 0};
-   v[3] = {-lado/2, lado, 0};
+   v[0] = {-lado, 0, 0};
+   v[1] = {lado, 0, 0};
+   v[2] = {lado, lado, 0};
+   v[3] = {-lado, lado, 0};
 }
 
 void Cuadro::createTexCoordinates()

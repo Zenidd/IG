@@ -24,6 +24,7 @@ class LuzDireccional : public Luz
    protected:
       float alpha;
       float beta;
+      float light_colour = 0;
    public:
       // inicializar la fuente de luz
       LuzDireccional (const Tupla2f orientacion, GLenum idLuzOpenGL, Tupla4f colorA, Tupla4f colorE, Tupla4f colorD ) ;
@@ -34,6 +35,8 @@ class LuzDireccional : public Luz
       void disminuirAnguloBeta ( float incremento ) ;
       void calcular_posicion();
       void cambiarAngulo();
+      // Cambiar color luz:
+      void cambiar_color();
 };
 
 #endif

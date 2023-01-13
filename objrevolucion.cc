@@ -17,7 +17,9 @@
 
 ObjRevolucion::ObjRevolucion() {}
 
-ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
+ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, std::string texture_name) {
+   if (texture_name != "none")
+      textura = new Textura(texture_name);
    ply::read_vertices( archivo, v_perfil);
    crearMalla(v_perfil, num_instancias);
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});
@@ -27,7 +29,9 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias) {
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
  
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instancias) {
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instancias, std::string texture_name) {
+   if (texture_name != "none")
+      textura = new Textura(texture_name);
    crearMalla(vector_perfil, num_instancias); 
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});
 }
@@ -78,7 +82,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
    float angle = 0;
    for(unsigned int i = 0; i < N; i++){ //N
       for(unsigned int j = 0; j < perfil_original.size(); j++){ //M
-         angle = 2*M_PI*i/N;
+         angle = 2*M_PI*i/num_instancias;
          if(i<num_instancias){
             v.push_back({
                         cos(angle)*perfil_original[j][X] + sin(angle)*perfil_original[j][Z],
@@ -124,7 +128,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
          f.push_back({a, b, b+1});
          f.push_back({a, b+1, a+1});
       }
-   int v_tam = v.size();
+
    // std::cout << "Tam vector v " << v.size() << std::endl;
    // Añadir tapas
    // N = N, perfil_original.size() = M
@@ -134,7 +138,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
       if(text_activa) ct.push_back({0,0});
       int iPN = v.size()-1;
       for(unsigned int i = 0; i < num_instancias; i++){ //N
-         f.push_back({M*((i+1)%N), M * i  , iPN});
+         f.push_back({M*((i+1)%num_instancias), M * i  , iPN});
       }
    }
    if (polo_n){
@@ -143,7 +147,7 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
       int iPS = v.size()-1;
       for(unsigned int i = 0; i < num_instancias; i++){ //N
          float a = M *(i+1)-1;
-         float b = M*((i+1)%N)+M-1;
+         float b = M*((i+1)%num_instancias)+M-1;
          float c = iPS;
          f.push_back({ a, b, c});
          // std::cout << "{" << a << "," << b << "," << c << "}" << std::endl;

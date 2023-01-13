@@ -61,3 +61,12 @@ void LuzDireccional::disminuirAnguloBeta(float incremento)
     calcular_posicion();
     // std::cout << "beta ahora vale " << beta << std::endl;
 }
+
+void LuzDireccional::cambiar_color()
+{
+    light_colour += 0.05;
+    this->colorAmbiente[Z]  = abs(sin(light_colour));
+    this->colorDifuso[Z]    = abs(sin(light_colour));
+    this->colorEspecular[Z] = abs(sin(light_colour));
+
+}

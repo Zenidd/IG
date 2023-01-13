@@ -3,9 +3,10 @@
 #include "esfera.h"
 #include "objrevolucion.h"
 
-Esfera::Esfera( const int num_vert_perfil, const int num_instancias_perf, const float radio )
+Esfera::Esfera( const int num_vert_perfil, const int num_instancias_perf, const float radio, std::string texture_name )
 {  
-   textura = new Textura("./world_texture.jpeg");
+   if (texture_name != "none")
+      textura = new Textura(texture_name);
    esfera_vertex(num_vert_perfil, radio);
    crearMalla(v_perfil, num_instancias_perf); 
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f} );

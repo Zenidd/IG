@@ -5,6 +5,7 @@
 
 Anillo::Anillo( const int num_vert_perfil, const int num_instancias_perf, const float altura , const float radio )
 {
+   textura = new Textura("./ring.jpeg");
    anillo_vertex(num_vert_perfil, radio, altura );
    crearMalla(v_perfil, num_instancias_perf); 
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f});

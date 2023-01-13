@@ -11,8 +11,10 @@ SunMoon::SunMoon()
    Tupla4f m_especular(0.0, 0.0, 0.0, 0.0);
 
    m_ambiental = {0.7, 0.0, 0.0, 0.1};
-   m_difusa = {0.940, 0.0564, 0.0564, 0.5};
-   m_especular = {0.940, 0.0564, 0.0564, 1.0};
+   // m_difusa = {0.940, 0.0564, 0.0564, 0.5};
+   m_difusa = {1.0, 1.0, 1.0, 1.0};
+   // m_especular = {0.940, 0.0564, 0.0564, 0.0};
+   m_especular = {0.0, 0.0, 0.0, 0.0};
    Material sun_m(m_ambiental, m_especular, m_difusa, 50.0);
 
 
@@ -30,11 +32,11 @@ SunMoon::SunMoon()
 
    Tupla3f posicionLuz_moon = Tupla3f(0.0f, -300.0f, -400.0f);
    Tupla4f ambiental_moon(0.0, 0.0, 0.0, 0.0);
-   Tupla4f difusa_moon(1.0,1.0,1.0,1.0);
-   Tupla4f especular_moon(1.0,1.0,1.0,1.0);
+   Tupla4f difusa_moon(0.7,0.7,0.7,1.0);
+   Tupla4f especular_moon(0.7,0.7,0.7,0.3);
 
-   sun = new Esfera(50, 50, 10);
-   moon = new Esfera(50, 50, 10);
+   sun = new Esfera(50, 50, 10, "sun_tex.jpeg");
+   moon = new Esfera(50, 50, 10, "crater.jpeg");
    this->sun->setMaterial(sun_m);
    this->moon->setMaterial(moon_m);
    this->luzposicionalsol = new LuzPosicional(posicionLuz, GL_LIGHT3, ambiental, especular, difusa);
@@ -50,15 +52,15 @@ void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glRotatef(rotation, 0, 0, 1);
       luzposicionalsol -> activar();
       luzposicionalmoon -> activar();
-      glTranslatef(0,0,-1000);
+      glTranslatef(0,0,-1200);
       glPushMatrix();
-         glTranslatef(0,500,0);
-         glScalef(8,8,8);
+         glTranslatef(0,800,0);
+         glScalef(16,16,16);
          sun -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
       glPopMatrix();
       glPushMatrix();
-         glTranslatef(0,-500,0);
-         glScalef(8,8,8);
+         glTranslatef(0,-800,0);
+         glScalef(16,16,16);
          moon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);   
       glPopMatrix();
    glPopMatrix();
@@ -66,7 +68,6 @@ void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
 
 void SunMoon::change_rotation(float units){
    rotation += units;
-
    // rotation %= 360;
 }
 

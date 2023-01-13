@@ -28,7 +28,7 @@ class Material {
       // const float brillo_defecto = 20.0f;
 
       const Tupla4f amb_dif_defecto = {0.2, 0.2, 0.2, 1.0};
-      const Tupla4f esp_defecto = {1.0, 1, 1, 0.5};
+      const Tupla4f esp_defecto = {1.0, 1, 1, 0.0};
       const Tupla4f dif_defecto = {1.0, 1.0, 1.0, 0.5};
       const float brillo_defecto = 20.0f;
       Tupla4f ambiente;

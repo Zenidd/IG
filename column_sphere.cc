@@ -5,7 +5,7 @@
 
 ColumnSphere::ColumnSphere(unsigned int initial_rotation) : rotation_degrees(initial_rotation)
 {
-   esfera = new Esfera(30, 20, 1);
+   esfera = new Esfera(30, 20, 1, "black_hole.jpeg");
    satelite = new Esfera(30, 20, 1);
 }
 
