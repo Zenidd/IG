@@ -98,6 +98,9 @@ Escena::Escena()
    esfera1 = new Esfera(30, 50, 20);
    esfera2 = new Esfera(30, 50, 20);
 
+
+   bola_mundo = new Esfera(30, 50, 20);
+
    cilindro = new Cilindro(30, 20, 4, 1000);
 
    cubo     = new Cubo(1);
@@ -106,9 +109,17 @@ Escena::Escena()
 
    sunmoon = new SunMoon();
 
+   //Texturas
+
+   cuadro = new Cuadro(100);
+
    this->esfera0->setMaterial(sun0);
    this->esfera1->setMaterial(sun1);
    this->esfera2->setMaterial(negro_e);
+
+
+
+   this->bola_mundo->setMaterial(blanco_d);
 
    this->cilindro->setMaterial(floor);
 
@@ -237,6 +248,21 @@ void Escena::dibujar()
    //    glTranslatef(0.0f, 160.0f, 110.0f);
    //    esfera2 -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    // glPopMatrix ();
+
+   // Cuadro
+   glPushMatrix ();
+      glTranslatef(0, 100, 200);
+      cuadro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+   glPushMatrix ();
+      glTranslatef(0, 200, 200);
+      glScalef(3,3,3);
+      glRotatef(270,0,1,0);
+      bola_mundo -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
+   glPopMatrix ();
+
+
 
    // Landscape
 

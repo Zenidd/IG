@@ -25,6 +25,9 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
    // VBO Luces
    if ( id_vbo_n_ver == 0 && LightsEnabled) id_vbo_n_ver = CrearVBO(GL_ARRAY_BUFFER, sizeof(nv[0])*nv.size(), nv.data());
 
+   // VBO Texturas
+   if ( textura != nullptr && id_vbo_ct == 0) id_vbo_ct = CrearVBO(GL_ARRAY_BUFFER, sizeof(ct[0])*ct.size(), ct.data());
+
 
    glEnableClientState( GL_COLOR_ARRAY );
    glBindBuffer( GL_ARRAY_BUFFER , id_vbo_ver );
@@ -37,6 +40,18 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
    glEnableClientState( GL_VERTEX_ARRAY );
    // activar buffer: VBO de triángulos
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
+
+
+   if (textura != nullptr){
+      if ( id_vbo_ct != 0 ) {
+         textura->activar();
+         glBindBuffer(GL_ARRAY_BUFFER , id_vbo_ct); 
+         glTexCoordPointer(2, GL_FLOAT, 0, 0);
+         glBindBuffer( GL_ARRAY_BUFFER , 0 );
+         glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
+      }
+   }
+
 
    if (LinesEnabled){
       if ( id_vbo_c_l != 0 ) {
@@ -85,14 +100,16 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glDisableClientState( GL_NORMAL_ARRAY );
    } 
 
-   else
-
+   // if(!ct.empty())
+   //    std::cout << ct.size() << " coord.textura";
 
    // desactivar buffer: VBO de triángulos
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , 0 );
    // desactivar uso de array de vértices y colores
    glDisableClientState( GL_VERTEX_ARRAY );
    glDisableClientState( GL_COLOR_ARRAY );
+   glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
+   glDisable( GL_TEXTURE_2D );
 }
 
 

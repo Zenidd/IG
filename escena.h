@@ -16,6 +16,7 @@
 #include "anillo.h"
 #include "column.h"
 #include "sun_moon.h"
+#include "cuadro.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL} menu;
 typedef enum {SATELITE, ESFERA, ANILLO, EMPTY} gradosLibertad;
@@ -75,6 +76,8 @@ class Escena
    Esfera * esfera0 = nullptr;
    Esfera * esfera1 = nullptr;
    Esfera * esfera2 = nullptr;
+  
+   Esfera * bola_mundo = nullptr;
 
    Anillo * anillo = nullptr;
 
@@ -83,6 +86,8 @@ class Escena
 
   Column * column = nullptr;
   SunMoon * sunmoon = nullptr;
+
+  Cuadro * cuadro = nullptr;
 
   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
   bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;

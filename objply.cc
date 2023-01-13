@@ -8,9 +8,10 @@
 //
 // *****************************************************************************
 
-ObjPLY::ObjPLY( const std::string & nombre_archivo )
+ObjPLY::ObjPLY( const std::string & nombre_archivo, const std::string nombre_textura)
 {
    // leer la lista de caras y vértices
+   // textura = new Textura("./world_texture.jpeg");
    ply::read( nombre_archivo, this->v, this->f );
    createColours(v.size(), {0.7,0.69,0.05}, {0.0, 1.0, 0.0}, {0.0, 0.0, 0.0});
 }

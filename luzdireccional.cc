@@ -61,10 +61,3 @@ void LuzDireccional::disminuirAnguloBeta(float incremento)
     calcular_posicion();
     // std::cout << "beta ahora vale " << beta << std::endl;
 }
-
-void LuzDireccional::cambiarAngulo ()
-{
-    // std::cout << "Valor de Alpha es " << alpha  << "Valor de beta es " << beta << std::endl;
-    glRotatef(alpha,0.0,1.0,0.0);
-    glRotatef(beta,1.0,0.0,0.0);
-}

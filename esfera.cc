@@ -4,7 +4,9 @@
 #include "objrevolucion.h"
 
 Esfera::Esfera( const int num_vert_perfil, const int num_instancias_perf, const float radio )
-{   esfera_vertex(num_vert_perfil, radio);
+{  
+   textura = new Textura("./world_texture.jpeg");
+   esfera_vertex(num_vert_perfil, radio);
    crearMalla(v_perfil, num_instancias_perf); 
    createColours(v.size(), {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f} );
 }
@@ -22,5 +24,4 @@ void Esfera::esfera_vertex(const int num_vert_perfil, const float radio)
    //    std::cout << "{" <<v_perfil[i][X] << "," << v_perfil[i][Y] << "," << v_perfil[i][Z] << "}" << std::endl;
    // std::cout << "Size of Cono vertex is " << v_perfil.size() << std::endl;
 }
-
 

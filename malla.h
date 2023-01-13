@@ -12,6 +12,7 @@
 
 #include "auxiliar.h"
 #include "material.h"
+#include "textura.h"
 
 // *****************************************************************************
 //
@@ -38,6 +39,11 @@ class Malla3D
       std::vector<Tupla3f> c_l ; // Array de colores visualizacion lineas
       std::vector<Tupla3f> c_p ; // Array de colores visualizacion puntos
 
+
+      std::vector<Tupla2f> ct; // Array de coordenadas de texturas
+
+      Textura *textura=nullptr;
+
       GLuint id_vbo_ver = 0;
       GLuint id_vbo_tri = 0; 
 
@@ -46,6 +52,8 @@ class Malla3D
       GLuint id_vbo_c_s = 0;
 
       GLuint id_vbo_n_ver = 0;
+
+      GLuint id_vbo_ct = 0;
 
       void calcularNormales();
       GLuint CrearVBO( GLuint tipo_vbo, GLuint tam, GLvoid * puntero_ram);

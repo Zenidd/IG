@@ -33,9 +33,14 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> vector_perfil, int num_instanc
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias) {
-
+   float angulo;
+   // variables de textura
+   bool text_activa = false;
+   float d, s, t;
+   std::vector<float> dist;
    int M = perfil_original.size();
    int N = num_instancias;
+   Tupla3f aux;
    if(perfil_original.front()[Y] > perfil_original.back()[Y]){
       std::cout << "Detectado perfil descendente\n";
       std::vector<Tupla3f> aux;
@@ -61,22 +66,58 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
       polo_n = true;
    }
    M = perfil_original.size();
+
+   if( Malla3D::textura != nullptr){
+      // std::cout << "\ntextura activa\n";
+      dist.push_back(0);   // d0 = 0
+      text_activa = true;
+      N++;   // instancia extra necesaria para las coord. de textura 
+   }
+
    // Vector de vertices
    float angle = 0;
-   for(unsigned int i = 0; i < N; i++) //N
+   for(unsigned int i = 0; i < N; i++){ //N
       for(unsigned int j = 0; j < perfil_original.size(); j++){ //M
          angle = 2*M_PI*i/N;
-         v.push_back({
-                     cos(angle)*perfil_original[j][X] + sin(angle)*perfil_original[j][Z],
-                     perfil_original[j][Y],
-                     cos(angle)*perfil_original[j][Z] - sin(angle)*perfil_original[j][X]
-                  
-         });
+         if(i<num_instancias){
+            v.push_back({
+                        cos(angle)*perfil_original[j][X] + sin(angle)*perfil_original[j][Z],
+                        perfil_original[j][Y],
+                        cos(angle)*perfil_original[j][Z] - sin(angle)*perfil_original[j][X]
+                     
+            });
+         }
+         else{
+            v.push_back(v[j]); // instancia extra similar al perfil original en coordenadas pero con diferente coord. textura
+         }
+         if (i==0 && text_activa && j>0) {
+            d = (v[j]-v[j-1]).lengthSq(); // modulo ( v[1]-v[0] )
+            d += dist[j-1];               // d1 = 0 + modulo(...)
+            dist.push_back(d);   // dj+1
+         }    
+
       }
+      if (text_activa) {
+         // 's' igual para todos los vertices de cada instancia
+         // 't' unica para cada vertice de cada instancia
+         s = (float)i/(float)num_instancias;
+         for(int j = 0; j < M; j++){
+            t = dist[j] / d;
+            ct.push_back({ s , t });
+            //if(i>=num_instancias-1 || i==0){
+            //   std::cout << ct[m*i+j] << "\t--> v[" << m*i+j << "]\n";
+            //}
+            //std::cout << "t = " << t << "\n";
+         }
+         //std::cout << "s =" << s << "\n";
+      }
+   }
+
+
    // Vector de caras
    int a = 0,
        b = 0;
-   for(unsigned int i = 0; i < N; i++) //N
+   for(unsigned int i = 0; i < num_instancias; i++) //N
       for(unsigned int j = 0; j < perfil_original.size()-1; j++){ //M
          a = perfil_original.size()*i+j;
          b = perfil_original.size()*((i+1) % N ) + j; 
@@ -90,15 +131,17 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
 
    if (polo_s){
       v.push_back(v_polo_s);
+      if(text_activa) ct.push_back({0,0});
       int iPN = v.size()-1;
-      for(unsigned int i = 0; i < N; i++){ //N
+      for(unsigned int i = 0; i < num_instancias; i++){ //N
          f.push_back({M*((i+1)%N), M * i  , iPN});
       }
    }
    if (polo_n){
       v.push_back(v_polo_n);
+      if(text_activa) ct.push_back({1,1});
       int iPS = v.size()-1;
-      for(unsigned int i = 0; i < N; i++){ //N
+      for(unsigned int i = 0; i < num_instancias; i++){ //N
          float a = M *(i+1)-1;
          float b = M*((i+1)%N)+M-1;
          float c = iPS;
@@ -118,4 +161,10 @@ void ObjRevolucion::createColours(int size, Tupla3f color_s, Tupla3f color_l, Tu
    for( unsigned i = 0 ; i < size ; i++ ) c_s[i] = color_s ;
    for( unsigned i = 0 ; i < size ; i++ ) c_l[i] = color_l ;
    for( unsigned i = 0 ; i < size ; i++ ) c_p[i] = color_p ;
+}
+
+
+void ObjRevolucion::calcularCoordTextura()
+{
+
 }
