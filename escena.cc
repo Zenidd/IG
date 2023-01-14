@@ -77,16 +77,20 @@ Escena::Escena()
    Material sun2(m_ambiental, m_especular, m_difusa, 50.0);
 
    m_ambiental = {0.76,0.7,0.5, 1.0};
-   m_difusa = {0.76,0.7,0.5, 1.0};
-   m_especular = {0.76,0.7,0.5, 1.0};
+   m_difusa = {0.66,0.6,0.4, 1.0};
+   m_especular = {0.66,0.6,0.4, 0.7};
    Material floor(m_ambiental, m_especular, m_difusa, 50.0);
 
+   m_ambiental = {0.76,0.7,0.5, 1.0};
+   m_difusa = {0.76,0.7,0.5, 1.0};
+   m_especular = {0.76,0.7,0.5, 1.0};
+   Material sphinx(m_ambiental, m_especular, m_difusa, 50.0);
 
    // OBJETOS
    objrevolucion = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    objrevolucion1 = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    
-   objetoply = new ObjPLY("./plys/untitled.ply");
+   objetoply = new ObjPLY("./falcon.ply");
    // mountainPLY = new ObjPLY("./plys/mountain.ply");
    desertPLY = new ObjPLY("./plys/desertfinal.ply");
 
@@ -274,12 +278,16 @@ void Escena::dibujar()
 
    // Estatuas
    glPushMatrix ();
-      glTranslatef(-100.0f, 0.0f, -70.0f);
+      glTranslatef(-100.0f, 30.0f, 250.0f);
+      glRotatef(-90, 1, 0, 0);
+      glScalef(2,2,2);
       objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
    glPushMatrix ();
-      glTranslatef(100.0f, 0.0f, -70.0f);
+      glTranslatef(100.0f, 30.0f, 250.0f);
+      glRotatef(-90, 1, 0, 0);
+      glScalef(2,2,2);
       objetoply -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    glPopMatrix ();
 
