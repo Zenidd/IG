@@ -35,8 +35,8 @@ SunMoon::SunMoon()
    Tupla4f difusa_moon(0.7,0.7,0.7,1.0);
    Tupla4f especular_moon(0.7,0.7,0.7,0.3);
 
-   sun = new Esfera(50, 50, 10, "sun_tex.jpeg");
-   moon = new Esfera(50, 50, 10, "crater.jpeg");
+   sun = new Esfera(50, 50, 10, "./textures/sun_tex.jpeg");
+   moon = new Esfera(50, 50, 10, "./textures/crater.jpeg");
    this->sun->setMaterial(sun_m);
    this->moon->setMaterial(moon_m);
    this->luzposicionalsol = new LuzPosicional(posicionLuz, GL_LIGHT3, ambiental, especular, difusa);

@@ -90,20 +90,20 @@ Escena::Escena()
    objrevolucion = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    objrevolucion1 = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    
-   objetoply = new ObjPLY("./falcon.ply");
+   objetoply = new ObjPLY("./plys/falcon.ply");
    // mountainPLY = new ObjPLY("./plys/mountain.ply");
    desertPLY = new ObjPLY("./plys/desertfinal.ply");
 
-   cono0 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
-   cono1 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
-   cono2 = new Cono(10, 4, 1, 1, "pyramid.jpeg");
+   cono0 = new Cono(10, 4, 1, 1, "./textures/pyramid.jpeg");
+   cono1 = new Cono(10, 4, 1, 1, "./textures/pyramid.jpeg");
+   cono2 = new Cono(10, 4, 1, 1, "./textures/pyramid.jpeg");
 
    esfera0 = new Esfera(30, 50, 20);
    esfera1 = new Esfera(30, 50, 20);
    esfera2 = new Esfera(30, 50, 20);
 
 
-   bola_mundo = new Esfera(30, 50, 20, "world_texture.jpeg");
+   bola_mundo = new Esfera(30, 50, 20, "./textures/world_texture.jpeg");
 
    cubo     = new Cubo(1);
 

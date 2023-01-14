@@ -16,7 +16,7 @@ Cuadro::Cuadro(float lado)
    createVertex(lado);
    createTriangles();
    createColours();
-   textura = new Textura("./piramides.jpeg");
+   textura = new Textura("./textures/piramides.jpeg");
    createTexCoordinates();
 }
 
