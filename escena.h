@@ -17,9 +17,12 @@
 #include "column.h"
 #include "sun_moon.h"
 #include "cuadro.h"
-
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL} menu;
+#include "camera.h"
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL, CAMARA} menu;
 typedef enum {SATELITE, ESFERA, ANILLO, EMPTY} gradosLibertad;
+typedef enum {MOVIENDO_CAMARA_FIRSTPERSON, NO_MOVIENDO_CAMARA_FIRSTPERSON, ZOOM_IN, ZOOM_OUT} estadoRaton;
+// typedef enum {IZQUIERDO, DERECHO} botonRaton;
+
 class Escena
 {
 
@@ -47,9 +50,19 @@ class Escena
 
    menu modoMenu = NADA;
    gradosLibertad gradoslibertad = EMPTY;
+   estadoRaton estadoraton = NO_MOVIENDO_CAMARA_FIRSTPERSON;
+
    // Luces de le escena
    LuzDireccional * luzdireccional = nullptr;
    LuzPosicional * luzposicional = nullptr;
+
+   // Camaras de la escena
+   std::vector<Camara *> camaras;
+   int camaraActiva = 0;
+   int xant = 0, yant = 0;
+   Camara * camara0 = nullptr;
+   Camara * camara1 = nullptr;
+   Camara * camara2 = nullptr;
 
    // Objetos de la escena
    Ejes ejes;
@@ -115,12 +128,14 @@ class Escena
 
    public:
     Escena();
+    void clickRaton( int boton , int estado , int x, int y );
+    void ratonMovido( int x, int y );
+    void custom_change_observer ();
 	void inicializar( int UI_window_width, int UI_window_height );
 	void redimensionar( int newWidth, int newHeight ) ;
 
 	// Dibujar
 	void dibujar() ;
-
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );

@@ -12,7 +12,6 @@
 
 Escena::Escena()
 {
-
    Front_plane       = 50.0;
    Back_plane        = 3000.0;
    Observer_distance = 8*Front_plane;
@@ -55,7 +54,6 @@ Escena::Escena()
    m_especular = {1.0, 1, 1, 1.0};
    Material negro_e(m_ambiental, m_especular, m_difusa, 40.0);
 
-
    m_ambiental = {0.38,0.39,0.35, 0.1};
    m_difusa = {0.38,0.39,0.35,0.5};
    m_especular = {0.38,0.39,0.35,1.0};
@@ -91,7 +89,7 @@ Escena::Escena()
    objrevolucion1 = new ObjRevolucion("./plys/peon_inverso.ply", 80);
    
    objetoply = new ObjPLY("./plys/falcon.ply");
-   // mountainPLY = new ObjPLY("./plys/mountain.ply");
+   mountainPLY = new ObjPLY("./plys/mountain.ply");
    desertPLY = new ObjPLY("./plys/desertfinal.ply");
 
    cono0 = new Cono(10, 4, 1, 1, "./textures/pyramid.jpeg");
@@ -103,7 +101,8 @@ Escena::Escena()
    esfera2 = new Esfera(30, 50, 20);
 
 
-   bola_mundo = new Esfera(30, 50, 20, "./textures/world_texture.jpeg");
+   // bola_mundo = new Esfera(30, 50, 20, "./textures/world_texture.jpeg");
+   bola_mundo = new Esfera(30, 50, 20, "./baby.jpeg");
 
    cubo     = new Cubo(1);
 
@@ -124,7 +123,7 @@ Escena::Escena()
    this->bola_mundo->setMaterial(blanco_d);
 
    this->objetoply->setMaterial(floor);
-   // this->mountainPLY->setMaterial(egypt_m);
+   this->mountainPLY->setMaterial(egypt_m);
 
    this->desertPLY->setMaterial(floor);
    
@@ -139,6 +138,53 @@ Escena::Escena()
 
    this->cubo->setMaterial(negro_e);
 
+   // CAMARAS
+   // CAMARA 0
+   Tupla3f eye = Tupla3f(0.0f, 0.0f, 400.0f);
+   Tupla3f at = Tupla3f(0.0f, 0.0f, 0.0f);
+   Tupla3f up = Tupla3f(0.0f, 1.0f, 0.0f);
+   float UI_window_width = 700;
+   float UI_window_height = 700;
+   float wx = UI_window_width/UI_window_height;
+   int camera_type = 0;
+   float camera_left = -wx;
+   float camera_right = wx;
+   float camera_bottom = -Height;
+   float camera_top = Height;
+   float camera_near = Front_plane;
+   float camera_far = Front_plane+200;
+   camara0 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
+   camaras.push_back(camara0);
+
+   // CAMARA 1
+   // eye = Tupla3f(0.0f, 300.0f, -1000.0f);
+   eye = Tupla3f(0.0f, 0.0f, 400.0f);
+   at = Tupla3f(0.0f, 0.0f, 0.0f);
+   up = Tupla3f(0.0f, 1.0f, 0.0f);
+   camera_type = 1;
+   camera_left = -wx;
+   camera_right = wx;
+   camera_bottom = -Height;
+   camera_top = Height;
+   camera_near = Front_plane;
+   camera_far = Front_plane +200;
+   camara1 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
+   camaras.push_back(camara1);
+
+
+   // CAMARA 2
+   eye = Tupla3f(0.0f, -300.0f, 400.0f);
+   at = Tupla3f(0.0f, 0.0f, 0.0f);
+   up = Tupla3f(0.0f, 1.0f, 0.0f);
+   camera_type = 1;
+   camera_left = -wx;
+   camera_right = wx;
+   camera_bottom = -Height;
+   camera_top = Height;
+   camera_near = Front_plane;
+   camera_far = Back_plane;
+   camara2 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
+   camaras.push_back(camara2);
 
 }
 
@@ -158,15 +204,17 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	Width  = UI_window_width/10;
 	Height = UI_window_height/10;
 
-   change_projection( float(UI_window_width)/float(UI_window_height) );
+   // change_projection( float(UI_window_width)/float
+   // (UI_window_height) );
+   // camaras[camaraActiva]->setProyeccion();
+
 	glViewport( 0, 0, UI_window_width, UI_window_height );
 
    // glEnable(GL_CULL_FACE);
    glEnable(GL_NORMALIZE); // Añadido para evitar que las normales varien con glScalef
    glShadeModel(GL_SMOOTH);
-   // glShadeModel(GL_FLAT);
+   // glShadeModel(GL_FLAT);q
 }
-
 
 
 // **************************************************************************
@@ -179,7 +227,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
-	change_observer();
+	// change_observer();
+   custom_change_observer();
    glPushMatrix();
       if (LightsEnabled) glDisable(GL_LIGHTING);
       ejes.draw();
@@ -187,7 +236,7 @@ void Escena::dibujar()
    glPopMatrix();
    glScalef(Scale,Scale,Scale);
 
-   // Luces
+   // LUCES
    glPushMatrix();
       luzdireccional->activar();
    glPopMatrix();
@@ -369,8 +418,29 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    cout << "Tecla pulsada: '" << tecla << "'" << endl;
    bool salir=false;
 
-
-   if ( modoMenu == MANUAL ){
+   if ( modoMenu == CAMARA ){
+      cout << "MODO CAMARA" << endl;
+      switch( toupper(tecla) ){
+         case 'Q' :
+            modoMenu=NADA; 
+            break ;
+         case '0':
+            std::cout << "CAMARA 0 ACTIVA" << std::endl;
+            camaraActiva = 0;
+            camaras[camaraActiva]->setProyeccion();
+            break;
+         case '1':
+            std::cout << "CAMARA 1 ACTIVA" << std::endl;
+            camaraActiva = 1;
+            camaras[camaraActiva]->setProyeccion();
+            break;
+         case '2':
+            std::cout << "CAMARA 2 ACTIVA" << std::endl;
+            camaraActiva = 2;
+            camaras[camaraActiva]->setProyeccion();
+            break;
+      }
+   } else if ( modoMenu == MANUAL ){
       switch( toupper(tecla) ){
          case 'Q' :
             modoMenu=NADA; 
@@ -547,7 +617,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       switch( toupper(tecla) )
       {
          case 'Q' :
-            salir=true ;   
+            salir=true ;
+            cout << "FIN DE PROGRAMA" << endl;
             break ;
          case 'V' :
             modoMenu=SELVISUALIZACION;
@@ -561,6 +632,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             cout << "MODO MANUAL" << endl;
             modoMenu=MANUAL;
             animation_enabled = false;
+            break ;
+         case 'C' :
+            cout << "MODO CAMARA" << endl;
+            modoMenu=CAMARA;
             break ; 
          default:
             break;
@@ -653,3 +728,49 @@ void Escena::animarModeloJerarquico()
       column -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
    }
 }
+
+void Escena::clickRaton( int boton , int estado , int x, int y )
+{
+   std::cout << "Button " << boton << "  Status " << estado << " X "<< x << " Y "<< y << std::endl;
+   if ( boton == 2 ){
+      if ( estado == 0 ){ //Estado 0 == boton pulsado
+         // Se pulsa el botón, por lo que se entra en el estado ’moviendo cámara’
+         estadoraton = MOVIENDO_CAMARA_FIRSTPERSON;
+         std::cout << "Moviendo cámara... " << std::endl;
+      }
+      else{  //Estado 1 == boton no pulsado
+         // Se levanta el botón, por lo que se sale del estado ’moviendo cámara’
+         estadoraton = NO_MOVIENDO_CAMARA_FIRSTPERSON;
+         std::cout << "Dejando de mover cámara... " << std::endl;
+      }
+   }
+   if ( boton == 3 ){
+      estadoraton = ZOOM_IN;
+      std::cout << "ZOOM IN" << std::endl;
+   }
+   if ( boton == 4 ){
+      estadoraton = ZOOM_OUT;
+      std::cout << "ZOOM OUT" << std::endl;
+   }
+}
+
+
+void Escena::ratonMovido( int x, int y )
+{
+   std::cout << "( "<< x << " , "<<  y << " ) "<< std::endl;
+   if (estadoraton == MOVIENDO_CAMARA_FIRSTPERSON ) {
+      camaras[camaraActiva]->girar(x-xant ,y-yant);
+      xant = x;
+      yant = y;
+   }
+}
+
+void Escena::custom_change_observer()
+{
+   // posicion del observador
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
+   camaras[camaraActiva]->setObserver();
+   camaras[camaraActiva]->setProyeccion();
+}
+

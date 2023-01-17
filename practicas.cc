@@ -94,6 +94,16 @@ void funcion_idle () {
    glutPostRedisplay();
 }
 
+void ratonMovido( int x, int y ) {
+   if (escena!=0)
+      escena->ratonMovido(x, y); 
+}
+
+void clickRaton( int boton , int estado , int x, int y ) {
+   if (escena!=0)
+      escena->clickRaton(boton, estado, x, y ); 
+}
+
 //***************************************************************************
 // Programa principal
 //
@@ -144,9 +154,12 @@ int main( int argc, char **argv )
    // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
    glutSpecialFunc( special_keys );
 
-
    //idle function
    glutIdleFunc(funcion_idle);
+
+   //P6
+   glutMouseFunc(clickRaton);
+   glutMotionFunc(ratonMovido);
 
    // inicialización de librería GLEW (solo en Linux)
    #ifdef LINUX

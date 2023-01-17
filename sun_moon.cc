@@ -36,7 +36,14 @@ SunMoon::SunMoon()
    Tupla4f especular_moon(0.7,0.7,0.7,0.3);
 
    sun = new Esfera(50, 50, 10, "./textures/sun_tex.jpeg");
-   moon = new Esfera(50, 50, 10, "./textures/crater.jpeg");
+
+   // moon = new Esfera(50, 50, 10, "./textures/crater.jpeg");
+
+   moon = new Esfera(50, 50, 10, "./baby.jpeg");
+
+
+
+
    this->sun->setMaterial(sun_m);
    this->moon->setMaterial(moon_m);
    this->luzposicionalsol = new LuzPosicional(posicionLuz, GL_LIGHT3, ambiental, especular, difusa);
@@ -61,6 +68,8 @@ void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glPushMatrix();
          glTranslatef(0,-800,0);
          glScalef(16,16,16);
+         glRotatef(90, 0, 1, 0);
+         glRotatef(180, 1, 0, 0);
          moon -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);   
       glPopMatrix();
    glPopMatrix();
