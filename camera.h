@@ -8,7 +8,7 @@ class Camara {
     Tupla3f up;
     float left, right, near, far ; // o bien aspect, fov, near, far;
     float top, bottom;
-    float alpha, beta;
+    float alpha = 0, beta = 0;
     const float dist = 200;
     public:
         int tipo ; // ORTOGONAL o Perspectiva

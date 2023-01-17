@@ -145,14 +145,13 @@ Escena::Escena()
    Tupla3f up = Tupla3f(0.0f, 1.0f, 0.0f);
    float UI_window_width = 700;
    float UI_window_height = 700;
-   float wx = UI_window_width/UI_window_height;
    int camera_type = 0;
-   float camera_left = -wx;
-   float camera_right = wx;
-   float camera_bottom = -Height;
-   float camera_top = Height;
-   float camera_near = Front_plane;
-   float camera_far = Front_plane+200;
+   float camera_left = -200;
+   float camera_right = 200;
+   float camera_bottom = -200;
+   float camera_top = 200;
+   float camera_near = 100;
+   float camera_far = 2000;
    camara0 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
    camaras.push_back(camara0);
 
@@ -162,12 +161,12 @@ Escena::Escena()
    at = Tupla3f(0.0f, 0.0f, 0.0f);
    up = Tupla3f(0.0f, 1.0f, 0.0f);
    camera_type = 1;
-   camera_left = -wx;
-   camera_right = wx;
-   camera_bottom = -Height;
-   camera_top = Height;
-   camera_near = Front_plane;
-   camera_far = Front_plane +200;
+   camera_left = -200;
+   camera_right = 200;
+   camera_bottom = -200;
+   camera_top = 200;
+   camera_near = 100;
+   camera_far = 2000;
    camara1 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
    camaras.push_back(camara1);
 
@@ -177,12 +176,12 @@ Escena::Escena()
    at = Tupla3f(0.0f, 0.0f, 0.0f);
    up = Tupla3f(0.0f, 1.0f, 0.0f);
    camera_type = 1;
-   camera_left = -wx;
-   camera_right = wx;
-   camera_bottom = -Height;
-   camera_top = Height;
-   camera_near = Front_plane;
-   camera_far = Back_plane;
+   camera_left = -200;
+   camera_right = 200;
+   camera_bottom = -200;
+   camera_top = 200;
+   camera_near = 200;
+   camera_far = 500;
    camara2 = new Camara(eye, at, up, camera_type, camera_left, camera_right, camera_bottom, camera_top ,camera_near, camera_far);
    camaras.push_back(camara2);
 
@@ -204,8 +203,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	Width  = UI_window_width/10;
 	Height = UI_window_height/10;
 
-   // change_projection( float(UI_window_width)/float
-   // (UI_window_height) );
+   change_projection( float(UI_window_width)/float(UI_window_height) );
    // camaras[camaraActiva]->setProyeccion();
 
 	glViewport( 0, 0, UI_window_width, UI_window_height );
@@ -427,17 +425,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          case '0':
             std::cout << "CAMARA 0 ACTIVA" << std::endl;
             camaraActiva = 0;
-            camaras[camaraActiva]->setProyeccion();
+            // camaras[camaraActiva]->setProyeccion();
+            change_projection(1);
             break;
          case '1':
             std::cout << "CAMARA 1 ACTIVA" << std::endl;
             camaraActiva = 1;
-            camaras[camaraActiva]->setProyeccion();
+            // camaras[camaraActiva]->setProyeccion();
+            change_projection(1);
             break;
          case '2':
             std::cout << "CAMARA 2 ACTIVA" << std::endl;
             camaraActiva = 2;
-            camaras[camaraActiva]->setProyeccion();
+            // camaras[camaraActiva]->setProyeccion();
+            change_projection(1);
             break;
       }
    } else if ( modoMenu == MANUAL ){
@@ -688,7 +689,8 @@ void Escena::change_projection( const float ratio_xy )
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
    const float wx = float(Height)*ratio_xy ;
-   glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+   // glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+   camaras[camaraActiva]->setProyeccion();
 }
 //**************************************************************************
 // Funcion que se invoca cuando cambia el tamaño de la ventana
@@ -771,6 +773,5 @@ void Escena::custom_change_observer()
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    camaras[camaraActiva]->setObserver();
-   camaras[camaraActiva]->setProyeccion();
 }
 

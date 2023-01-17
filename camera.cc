@@ -45,8 +45,9 @@ void Camara::girar(int x, int y){
     eye(Y) = dist*cos(alpha)*sin(beta);
     eye(X) = dist*sin(alpha);
 
-    std::cout << eye << "\n";
-
+    // std::cout << eye << "\n";
+    // rotarYExaminar(-x);
+    // rotarXExaminar(-y);
 }
 
 void Camara::mover(float x, float y, float z){

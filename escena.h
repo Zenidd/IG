@@ -107,7 +107,7 @@ class Escena
 
   bool alpha_l = false, beta_l = false;
   
-  bool LightsEnabled = false;
+  bool LightsEnabled = true;
 
   bool gl_light0_enabled = true;
   bool gl_light1_enabled = false;
