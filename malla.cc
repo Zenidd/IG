@@ -42,7 +42,7 @@ void Malla3D::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER , id_vbo_tri );
 
 
-   if (textura != nullptr){
+   if (textura != nullptr && !PointsEnabled && !LinesEnabled && !SolidEnabled){
       if ( id_vbo_ct != 0 ) {
          textura->activar();
          glBindBuffer(GL_ARRAY_BUFFER , id_vbo_ct); 

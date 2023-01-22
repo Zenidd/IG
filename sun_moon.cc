@@ -24,13 +24,13 @@ SunMoon::SunMoon()
    Material moon_m(m_ambiental, m_especular, m_difusa, 50.0);
 
 
-   Tupla3f posicionLuz = Tupla3f(0.0f, 300.0f, -400.0f);
+   Tupla3f posicionLuz = Tupla3f(0.0f, 800.0f, -1400.0f);
    Tupla4f ambiental(0, 0, 0, 0);
    Tupla4f difusa(0.84,0,0.9,1.0);
    Tupla4f especular(0.84,0,0.9,1.0);
 
 
-   Tupla3f posicionLuz_moon = Tupla3f(0.0f, -300.0f, -400.0f);
+   Tupla3f posicionLuz_moon = Tupla3f(0.0f, -800.0f, -1400.0f);
    Tupla4f ambiental_moon(0.0, 0.0, 0.0, 0.0);
    Tupla4f difusa_moon(0.7,0.7,0.7,1.0);
    Tupla4f especular_moon(0.7,0.7,0.7,0.3);
@@ -53,7 +53,7 @@ void SunMoon::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, boo
       glRotatef(rotation, 0, 0, 1);
       luzposicionalsol -> activar();
       luzposicionalmoon -> activar();
-      glTranslatef(0,0,-1200);
+      glTranslatef(0,0,-1400);
       glPushMatrix();
          glTranslatef(0,800,0);
          glScalef(16,16,16);

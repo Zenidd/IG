@@ -186,7 +186,7 @@ Escena::Escena()
    camaras.push_back(camara2);
 
    // CAMARA 3
-   eye                     = Tupla3f(150.0f, 200.0f, 300.0f);
+   eye                     = Tupla3f(0.0f, 200.0f, 300.0f);
    at                      = Tupla3f(0.0f, 0.0f, 600.0f);
    up                      = Tupla3f(0.0f, 1.0f, 0.0f);
    camera_type             = 1;
@@ -797,18 +797,22 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
    switch ( Tecla1 )
    {
 	   case GLUT_KEY_LEFT:
+         camaras[camaraActiva]->mover(-1,0,0);
          Observer_angle_y-- ;
          Observer_angle_y-- ;
          break;
 	   case GLUT_KEY_RIGHT:
+         camaras[camaraActiva]->mover(1,0,0);
          Observer_angle_y++ ;
          Observer_angle_y++ ;
          break;
 	   case GLUT_KEY_UP:
+         camaras[camaraActiva]->mover(0,0,-1);
          Observer_angle_x-- ;
          Observer_angle_x-- ;
          break;
 	   case GLUT_KEY_DOWN:
+         camaras[camaraActiva]->mover(0,0, 1);
          Observer_angle_x++ ;
          Observer_angle_x++ ;
          break;

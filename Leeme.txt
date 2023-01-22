@@ -3,51 +3,48 @@ jpsg@correo.ugr.es
 
 INSTRUCCIONES
     - Ejecutar "make" para compilar y lanzar
-    - Tecla "O" activa modo selección de objeto (Ningun objeto mostrado por defecto):
-        . Con este modo activo, tecla "P" activa/desactiva objeto Pirámide.
-        . Con este modo activo, tecla "C" activa/desactiva objeto Cubo.
-    - Tecla "V" activa modo selección de Visualización (Visualización alambre por defecto):
-        . Con este modo activo, tecla "L" activa/desactiva modo alambre.
-        . Con este modo activo, tecla "S" activa/desactiva modo sólido.
-        . Con este modo activo, tecla "D" activa/desactiva modo punto.
+    - Tecla "V" Activa/desactiva el modo visualizacion e iluminacion
+         'L' Activa modo lineas y desactiva iluminacion
+         'P' Activa modo puntos y desactiva iluminacion
+         'S' Activa modo solido y desactiva iluminacion
+         '0' Selecciona grado de libertad 0
+         '1' Selecciona grado de libertad 1
+         '2' Selecciona grado de libertad 2
+         '3' Selecciona grado de libertad 3
+         '4' Selecciona grado de libertad 4
+         '5' Selecciona grado de libertad 5
+         '6' Selecciona grado de libertad 6
+         '7' Selecciona grado de libertad 7
+         'A' Variacion angulo Alpha
+         'B' Variacion angulo Beta
+         '<' Disminuir angulo Alpha
+         '>' Disminuir angulo Beta
+    - Tecla "A" Activa/desactiva el modo animación
+         '+' Aumentar velocidad animación
+         '-' Disminuir velocidad animación
+    - Tecla "M" Activa/desactiva movimiento manual de los grados de libertad del modelo jerarquico
+         '0' Selecciona grado de libertad 0
+         '1' Selecciona grado de libertad 1
+         '2' Selecciona grado de libertad 2
+         '+' Aumentar velocidad animación
+         '-' Disminuir velocidad animación
+    - Tecla "C" Activa/desactiva modo Camara
+         '0' Selecciona camara 0
+         '1' Selecciona camara 1
+         '2' Selecciona camara 2
+    - Tecla "Z" Activa/desactiva modo Zoom
+         '+' Aumentar zoom
+         '-' Disminuir zoom
+    - Camara primera persona
+         'Cursor arriba' Disminuye coordenada Z
+         'Cursor abajo' Aumenta coordenada Z
+         'Cursor izquierda' Disminuye coordenada X
+         'Cursor derecha' Aumenta coordenada X
+    - Manteniendo clic derecho pulsado se rota la camára
 
 COMENTARIOS
-    - Los dos objetos pueden ser visulizados simultaneamente.
     - La única modificación al Makefile original ha sido comentar la flag anotada aquí abajo.
     Esa es la ruta donde antiguamente se esperaba el framework OpenGL antes de Maverick (2018).
     Ahora es mandatorio usar la API Metal de Mac y esa librería no está ahi.
 
 glu_flag_macos  := /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
-
---------------------
-Comentarios primera corrección (19/10/2022):
-La parte del cull faces en la inicialización - done
-caras al reves en cuadrado/piramide pentagonal  - done
-centro de la base del cuadrado en el origen  - done 
-
-
---------------------
-Comentarios primera corrección (26/10/2022):
-fabs(a - b) < epsilon (La busqueda de polos debe implementarse con fabs) - To fix (P2)
-Los PLYs solo se interpretan en un sentido - To fix (P2)
-
---------------------
-
-
-Voy a realizar una escena ambientada en el antiguo egipto en la que 3 personajes reunidos observan en el cielo 3 soles de distinto color que se muestran simultaneamente sobre 3 pirámides.
-
-Algunas de las construcciones (estatuas de dioses/entes relevantes) van a ser PLYs descargados de internet. Generaré columnas con detalles por revolución. La P5 será la textura de las pirámides/suelo. 
-
-Estas columnas van a tener en su parte superior una parte movil que rota constantemente dejando una estela tras de si.
-
-Habrá tres cámaras, una en la posición de los personajes que observan los tres solas, otras para visualizar los y otra que mostrará la escena completa (P6).
-
-Cada uno de los soles será una luz posicional y una direccional apuntará a los personajes que serán PLYs.
-
---------------------
-Comentarios corrección P3:
-fabs(a - b) < epsilon (La busqueda de polos debe implementarse con fabs) - To fix (P2)
-Los PLYs solo se interpretan en un sentido - Fixed (P2)
-Luz direccional es modificada usando glRotatef en lugar de calcular nuevo alpha y beta - Fixed (P3)
-
---------------------

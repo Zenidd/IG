@@ -3,7 +3,7 @@
 
 
 class Camara {
-    Tupla3f eye;
+
     Tupla3f at;
     Tupla3f up;
     float left, right, near, far ; // o bien aspect, fov, near, far;
@@ -12,6 +12,7 @@ class Camara {
     float dist = 200;
     float factor = 1.0;
     public:
+        Tupla3f eye;
         int tipo ; // ORTOGONAL o Perspectiva
         Camara (Tupla3f eye, Tupla3f at, Tupla3f up, int tipo, float left, 
                 float right, float bottom, float top, float near, float far);

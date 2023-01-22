@@ -40,6 +40,7 @@ void Camara::rotarXFirstPerson(float angle){
 void Camara::rotarYFirstPerson(float angle){
 
 }
+
 void Camara::girar(int x, int y){
     alpha+=(float)(x*0.1);
     beta+=(float)(y*0.1);
@@ -51,7 +52,17 @@ void Camara::girar(int x, int y){
 }
 
 void Camara::mover(float x, float y, float z){
+    at(0) += x*20;
+    at(1) += y*20;
+    at(2) += z*20;
 
+    eye(0) += x*20;
+    eye(1) += y*20;
+    eye(2) += z*20;
+
+    this->dist =sqrt(eye[X]*eye[X]+eye[Z]*eye[Z]+eye[Y]*eye[Y]);
+    this->alpha=-atan(eye[X]/eye[Z])*(180/M_PI);
+    this->beta=-atan(sqrt(eye[X]*eye[X]+eye[Y]*eye[Y])/eye[Z])*(180/M_PI);
 }
 void Camara::zoom ( float factor ){
     this->factor += factor;
