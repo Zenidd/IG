@@ -18,9 +18,9 @@
 #include "sun_moon.h"
 #include "cuadro.h"
 #include "camera.h"
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL, CAMARA} menu;
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELILUMINACION, ANIMACION, MANUAL, CAMARA, ZOOM} menu;
 typedef enum {SATELITE, ESFERA, ANILLO, EMPTY} gradosLibertad;
-typedef enum {MOVIENDO_CAMARA_FIRSTPERSON, NO_MOVIENDO_CAMARA_FIRSTPERSON, ZOOM_IN, ZOOM_OUT} estadoRaton;
+typedef enum {MOVIENDO_CAMARA_FIRSTPERSON, NO_MOVIENDO_CAMARA_FIRSTPERSON} estadoRaton;
 // typedef enum {IZQUIERDO, DERECHO} botonRaton;
 
 class Escena
@@ -63,17 +63,24 @@ class Escena
    Camara * camara0 = nullptr;
    Camara * camara1 = nullptr;
    Camara * camara2 = nullptr;
+   Camara * camara3 = nullptr;
 
    // Objetos de la escena
    Ejes ejes;
    Cubo * cubo = nullptr ;
 
+   Cubo * murallas = nullptr ;
+
    PiramidePentagonal * piramide= nullptr ;
 
-   ObjPLY * objetoply= nullptr ;
-   ObjPLY * mountainPLY= nullptr ;
+   ObjPLY * falcon= nullptr ;
+   ObjPLY * obelisk= nullptr ;
    ObjPLY * desertPLY = nullptr ;
+   ObjPLY * gates = nullptr ;
+   ObjPLY * big_gates = nullptr ;
 
+   ObjPLY * skeksil = nullptr ;
+   ObjPLY * skektek = nullptr ;
 
    ObjRevolucion * objrevolucion = nullptr;
    ObjRevolucion * objrevolucion1 = nullptr;
@@ -81,6 +88,8 @@ class Escena
 
    Cilindro * cilindro = nullptr;
    Cilindro * cilindro1 = nullptr;
+
+   Cilindro * cil_atrio = nullptr;
 
    Cono * cono0 = nullptr;
    Cono * cono1 = nullptr;
@@ -94,13 +103,13 @@ class Escena
 
    Anillo * anillo = nullptr;
 
-  Material *blanco_d = nullptr;
-  Material *negro_e = nullptr;
+   Material *blanco_d = nullptr;
+   Material *negro_e = nullptr;
 
-  Column * column = nullptr;
-  SunMoon * sunmoon = nullptr;
+   Column * column = nullptr;
+   SunMoon * sunmoon = nullptr;
 
-  Cuadro * cuadro = nullptr;
+   Cuadro * cuadro = nullptr;
 
   bool CubeEnabled = false, PyramidEnabled = false, OplyEnabled=false;
   bool PointsEnabled = false, LinesEnabled = false, SolidEnabled = false;

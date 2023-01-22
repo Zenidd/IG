@@ -68,5 +68,4 @@ void LuzDireccional::cambiar_color()
     this->colorAmbiente[Z]  = abs(sin(light_colour));
     this->colorDifuso[Z]    = abs(sin(light_colour));
     this->colorEspecular[Z] = abs(sin(light_colour));
-
 }

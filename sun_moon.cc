@@ -36,13 +36,7 @@ SunMoon::SunMoon()
    Tupla4f especular_moon(0.7,0.7,0.7,0.3);
 
    sun = new Esfera(50, 50, 10, "./textures/sun_tex.jpeg");
-
-   // moon = new Esfera(50, 50, 10, "./textures/crater.jpeg");
-
-   moon = new Esfera(50, 50, 10, "./baby.jpeg");
-
-
-
+   moon = new Esfera(50, 50, 10, "./textures/crater.jpeg");
 
    this->sun->setMaterial(sun_m);
    this->moon->setMaterial(moon_m);

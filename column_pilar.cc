@@ -14,7 +14,7 @@ ColumnPilar::ColumnPilar(unsigned int initial_rotation)
 void ColumnPilar::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled, bool LightsEnabled){
    glPushMatrix();
       glPushMatrix();
-         glScalef(8, 64, 8);
+         glScalef(5, 64, 5);
          cilindro -> draw(PointsEnabled, LinesEnabled, SolidEnabled, LightsEnabled);
       glPopMatrix();
       glPushMatrix();
@@ -27,7 +27,7 @@ void ColumnPilar::draw(bool PointsEnabled, bool LinesEnabled, bool SolidEnabled,
 void ColumnPilar::ring_movement(unsigned int units){
    rotation_degrees+=units;
    // std::cout << "columnring_current_height es " << rotation_degrees << std::endl;
-   columnring_current_height=sin(rotation_degrees*(M_PI/180))*20 +30;
+   columnring_current_height=sin(rotation_degrees*(M_PI/180))*20 +50;
    // std::cout << "columnring_current_height es " << columnring_current_height << std::endl;
 }
 

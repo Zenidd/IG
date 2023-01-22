@@ -161,6 +161,7 @@ int main( int argc, char **argv )
    glutMouseFunc(clickRaton);
    glutMotionFunc(ratonMovido);
 
+
    // inicialización de librería GLEW (solo en Linux)
    #ifdef LINUX
    const GLenum codigoError = glewInit();
